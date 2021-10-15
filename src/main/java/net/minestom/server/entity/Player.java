@@ -275,7 +275,7 @@ public class Player extends LivingEntity implements CommandSender, Localizable, 
         // Recipes end
 
         // Tags
-        this.playerConnection.sendPacket(TagsPacket.DEFAULT_TAGS);
+        this.playerConnection.sendPacket(TagsPacket.GET_DEFAULT_TAGS(this.getPlayerConnection().getPacketAdapter()));
 
         // Some client updates
         this.playerConnection.sendPacket(getPropertiesPacket()); // Send default properties

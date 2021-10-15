@@ -12,6 +12,9 @@ import net.minestom.server.listener.manager.PacketListenerManager;
 import net.minestom.server.network.packet.FramedPacket;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
+import net.minestom.server.network.packet.server.multiversion.VersionUtils;
+import net.minestom.server.network.packet.server.multiversion.v1_17.V1_17PacketAdapter;
 import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.network.player.PlayerSocketConnection;
 import net.minestom.server.network.socket.Server;
@@ -109,6 +112,8 @@ public final class PacketUtils {
         if (MinestomAdventure.AUTOMATIC_COMPONENT_TRANSLATION && packet instanceof ComponentHoldingServerPacket) {
             needsTranslating = ComponentUtils.areAnyTranslatable(((ComponentHoldingServerPacket) packet).components());
         }
+
+        /** cannot be used for multiversion
         if (MinecraftServer.hasGroupedPacket() && !needsTranslating) {
             // Send grouped packet...
             if (!PACKET_LISTENER_MANAGER.processServerPacket(packet, players))
@@ -122,13 +127,16 @@ public final class PacketUtils {
                 player.sendPacket(framedPacket);
             }
         } else {
-            // Write the same packet for each individual players
-            for (Player player : players) {
-                if (!player.isOnline() || !playerValidator.isValid(player))
-                    continue;
-                player.getPlayerConnection().sendPacket(packet, false);
-            }
+         **/
+
+        // Write the same packet for each individual players
+        for (Player player : players) {
+            if (!player.isOnline() || !playerValidator.isValid(player))
+                continue;
+            player.getPlayerConnection().sendPacket(packet, false);
         }
+
+        //}
     }
 
     /**
@@ -213,20 +221,21 @@ public final class PacketUtils {
     }
 
     @ApiStatus.Internal
-    public static ByteBuffer createFramedPacket(@NotNull ServerPacket packet, boolean compression) {
+    public static ByteBuffer createFramedPacket(@NotNull ServerPacket packet, boolean compression, PacketAdapter adapter) {
         ByteBuffer buffer = PACKET_BUFFER.get().clear();
+        //TODO
         writeFramedPacket(buffer, packet, compression);
         return buffer;
     }
 
     @ApiStatus.Internal
-    public static ByteBuffer createFramedPacket(@NotNull ServerPacket packet) {
-        return createFramedPacket(packet, MinecraftServer.getCompressionThreshold() > 0);
+    public static ByteBuffer createFramedPacket(@NotNull ServerPacket packet, PacketAdapter adapter) {
+        return createFramedPacket(packet, MinecraftServer.getCompressionThreshold() > 0, adapter);
     }
 
     @ApiStatus.Internal
-    public static FramedPacket allocateTrimmedPacket(@NotNull ServerPacket packet) {
-        final ByteBuffer temp = PacketUtils.createFramedPacket(packet).flip();
+    public static FramedPacket allocateTrimmedPacket(@NotNull ServerPacket packet, PacketAdapter adapter) {
+        final ByteBuffer temp = PacketUtils.createFramedPacket(packet, adapter).flip();
         final ByteBuffer buffer = ByteBuffer.allocateDirect(temp.remaining())
                 .put(temp).flip().asReadOnlyBuffer();
         return new FramedPacket(packet.getId(), buffer, packet);
@@ -243,7 +252,14 @@ public final class PacketUtils {
         }
 
         private synchronized void append(ServerPacket serverPacket, PlayerConnection connection) {
-            final ByteBuffer framedPacket = createFramedPacket(serverPacket).flip();
+
+            PacketAdapter adapter = VersionUtils.V1_17_PACKET_ADAPTER;
+
+            if(connection instanceof PlayerSocketConnection) {
+                adapter = ((PlayerSocketConnection) connection).getPacketAdapter();
+            }
+
+            final ByteBuffer framedPacket = createFramedPacket(serverPacket, adapter).flip();
             final int packetSize = framedPacket.limit();
             if (packetSize >= buffer.capacity()) {
                 process(new SingleEntry(framedPacket, connection));

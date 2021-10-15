@@ -10,6 +10,9 @@ import net.minestom.server.network.ConnectionManager;
 import net.minestom.server.network.ConnectionState;
 import net.minestom.server.network.packet.FramedPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
+import net.minestom.server.network.packet.server.multiversion.VersionUtils;
+import net.minestom.server.network.packet.server.multiversion.v1_17.V1_17PacketAdapter;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,9 +40,13 @@ public abstract class PlayerConnection {
     private final AtomicInteger lastPacketCounter = new AtomicInteger(0);
     private short tickCounter = 0;
 
+    //Multiversion Packet Stuff
+    private PacketAdapter packetAdapter;
+
     public PlayerConnection() {
         this.online = true;
         this.connectionState = ConnectionState.UNKNOWN;
+        this.packetAdapter = VersionUtils.V1_17_PACKET_ADAPTER;
     }
 
     /**
@@ -148,6 +155,14 @@ public abstract class PlayerConnection {
         return MinecraftServer.getServer().getAddress();
     }
 
+
+    public void setPacketAdapter(PacketAdapter adapter) {
+        this.packetAdapter = adapter;
+    }
+
+    public PacketAdapter getPacketAdapter() {
+        return this.packetAdapter;
+    }
 
     /**
      * Gets the server port that the client used to connect.

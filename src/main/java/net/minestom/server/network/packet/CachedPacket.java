@@ -1,6 +1,7 @@
 package net.minestom.server.network.packet;
 
 import net.minestom.server.network.packet.server.ServerPacket;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.PacketUtils;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -22,13 +23,13 @@ public final class CachedPacket {
         this.lastChange = System.currentTimeMillis();
     }
 
-    public FramedPacket retrieve() {
+    public FramedPacket retrieve(PacketAdapter packetAdapter) {
         final long lastChange = this.lastChange;
         final long timestamp = packetTimestamp;
         final var ref = packet;
         FramedPacket cache = ref != null ? ref.get() : null;
         if (cache == null || lastChange > timestamp) {
-            cache = PacketUtils.allocateTrimmedPacket(supplier.get());
+            cache = PacketUtils.allocateTrimmedPacket(supplier.get(), packetAdapter);
             this.packet = new SoftReference<>(cache);
             this.packetTimestamp = lastChange;
         }

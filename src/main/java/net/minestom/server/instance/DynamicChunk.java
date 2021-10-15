@@ -10,6 +10,7 @@ import net.minestom.server.entity.pathfinding.PFBlock;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.BlockHandler;
 import net.minestom.server.network.packet.CachedPacket;
+import net.minestom.server.network.packet.FramedPacket;
 import net.minestom.server.network.packet.server.play.ChunkDataPacket;
 import net.minestom.server.network.packet.server.play.UpdateLightPacket;
 import net.minestom.server.utils.ArrayUtils;
@@ -124,16 +125,22 @@ public class DynamicChunk extends Chunk {
     @Override
     public void sendChunk(@NotNull Player player) {
         if (!isLoaded()) return;
-        player.sendPacket(lightCache.retrieve());
-        player.sendPacket(chunkCache.retrieve());
+        player.sendPacket(lightCache.retrieve(player.getPlayerConnection().getPacketAdapter()));
+        player.sendPacket(chunkCache.retrieve(player.getPlayerConnection().getPacketAdapter()));
     }
 
     @Override
     public void sendChunk() {
         if (!isLoaded()) return;
         if (getViewers().isEmpty()) return;
-        sendPacketToViewers(lightCache.retrieve());
-        sendPacketToViewers(chunkCache.retrieve());
+
+        //temp fix
+        for (Player viewer : this.getViewers()) {
+            this.sendChunk(viewer);
+        }
+        //TODO think of better solution
+        //sendPacketToViewers(lightCache.retrieve());
+        //sendPacketToViewers(chunkCache.retrieve());
     }
 
     @NotNull

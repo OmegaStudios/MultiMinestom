@@ -5,6 +5,7 @@ import net.minestom.server.gamedata.tags.Tag;
 import net.minestom.server.network.packet.FramedPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.PacketUtils;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -16,8 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 public class TagsPacket implements ServerPacket {
-    @ApiStatus.Internal
-    public static final FramedPacket DEFAULT_TAGS = PacketUtils.allocateTrimmedPacket(new TagsPacket(MinecraftServer.getTagManager().getTagMap()));
+
+    public static FramedPacket GET_DEFAULT_TAGS(PacketAdapter adapter) {
+        return PacketUtils.allocateTrimmedPacket(new TagsPacket(MinecraftServer.getTagManager().getTagMap()), adapter);
+    }
 
     public Map<Tag.BasicType, List<Tag>> tagsMap;
 

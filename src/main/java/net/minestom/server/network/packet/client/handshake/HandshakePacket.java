@@ -8,6 +8,7 @@ import net.minestom.server.extras.bungee.BungeeCordProxy;
 import net.minestom.server.network.ConnectionState;
 import net.minestom.server.network.packet.client.ClientPreplayPacket;
 import net.minestom.server.network.packet.server.login.LoginDisconnectPacket;
+import net.minestom.server.network.packet.server.multiversion.VersionUtils;
 import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.network.player.PlayerSocketConnection;
 import net.minestom.server.utils.binary.BinaryReader;
@@ -109,7 +110,7 @@ public class HandshakePacket implements ClientPreplayPacket {
                 connection.setConnectionState(ConnectionState.STATUS);
                 break;
             case 2:
-                if (protocolVersion == MinecraftServer.PROTOCOL_VERSION) {
+                if(VersionUtils.isVersionSupported(protocolVersion)) {
                     connection.setConnectionState(ConnectionState.LOGIN);
                 } else {
                     // Incorrect client version

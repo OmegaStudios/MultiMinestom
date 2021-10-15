@@ -13,6 +13,7 @@ import net.minestom.server.listener.manager.ClientPacketConsumer;
 import net.minestom.server.listener.manager.ServerPacketConsumer;
 import net.minestom.server.network.packet.client.login.LoginStartPacket;
 import net.minestom.server.network.packet.server.login.LoginSuccessPacket;
+import net.minestom.server.network.packet.server.multiversion.VersionUtils;
 import net.minestom.server.network.packet.server.play.DisconnectPacket;
 import net.minestom.server.network.packet.server.play.KeepAlivePacket;
 import net.minestom.server.network.player.PlayerConnection;
@@ -311,6 +312,7 @@ public final class ConnectionManager {
             LoginSuccessPacket loginSuccessPacket = new LoginSuccessPacket(player.getUuid(), player.getUsername());
             if (playerConnection instanceof PlayerSocketConnection) {
                 ((PlayerSocketConnection) playerConnection).writeAndFlush(loginSuccessPacket);
+                VersionUtils.setPacketAdapter((PlayerSocketConnection) playerConnection);
             } else {
                 playerConnection.sendPacket(loginSuccessPacket);
             }

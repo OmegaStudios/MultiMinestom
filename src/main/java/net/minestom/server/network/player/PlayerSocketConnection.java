@@ -267,7 +267,7 @@ public class PlayerSocketConnection extends PlayerConnection {
     }
 
     private void writePacket(@NotNull ServerPacket packet) {
-        write(PacketUtils.createFramedPacket(packet, compressed).flip());
+        write(PacketUtils.createFramedPacket(packet, compressed, this.getPacketAdapter()).flip());
     }
 
     public void writeAndFlush(@NotNull ServerPacket packet) {
