@@ -1,12 +1,17 @@
 package net.minestom.server.utils;
 
-import it.unimi.dsi.fastutil.ints.IntIntPair;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongIterator;
+import it.unimi.dsi.fastutil.longs.LongList;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.audience.ForwardingAudience;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.Viewable;
 import net.minestom.server.adventure.MinestomAdventure;
 import net.minestom.server.adventure.audience.PacketGroupingAudience;
+import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.listener.manager.PacketListenerManager;
 import net.minestom.server.network.packet.FramedPacket;
@@ -27,10 +32,11 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
-import java.util.*;
-import java.util.function.Consumer;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Objects;
+import java.util.WeakHashMap;
 import java.util.zip.Deflater;
 
 /**
@@ -155,17 +161,17 @@ public final class PacketUtils {
 
     @ApiStatus.Experimental
     public static void prepareViewablePacket(@NotNull Viewable viewable, @NotNull ServerPacket serverPacket,
-                                             @Nullable Player player) {
-        if (player != null && !player.isAutoViewable()) {
+                                             @Nullable Entity entity) {
+        if (entity != null && !entity.isAutoViewable()) {
             // Operation cannot be optimized
-            player.sendPacketToViewers(serverPacket);
+            entity.sendPacketToViewers(serverPacket);
             return;
         }
         ViewableStorage viewableStorage;
         synchronized (VIEWABLE_STORAGE_MAP) {
-            viewableStorage = VIEWABLE_STORAGE_MAP.computeIfAbsent(viewable, ViewableStorage::new);
+            viewableStorage = VIEWABLE_STORAGE_MAP.computeIfAbsent(viewable, v -> new ViewableStorage());
         }
-        viewableStorage.append(serverPacket, player != null ? player.getPlayerConnection() : null);
+        viewableStorage.append(viewable, serverPacket, entity instanceof Player ? (Player) entity : null);
     }
 
     @ApiStatus.Experimental
@@ -176,8 +182,8 @@ public final class PacketUtils {
     @ApiStatus.Internal
     public static void flush() {
         synchronized (VIEWABLE_STORAGE_MAP) {
-            VIEWABLE_STORAGE_MAP.values().parallelStream()
-                    .forEach(viewableStorage -> viewableStorage.process(null));
+            VIEWABLE_STORAGE_MAP.entrySet().parallelStream().forEach(entry ->
+                    entry.getValue().process(entry.getKey()));
         }
     }
 
@@ -242,16 +248,15 @@ public final class PacketUtils {
     }
 
     private static final class ViewableStorage {
-        private final WeakReference<Viewable> viewable;
-        private final Map<PlayerConnection, List<IntIntPair>> entityIdMap = new HashMap<>();
+        // Player id -> list of offsets to ignore (32:32 bits)
+        private final Int2ObjectMap<LongList> entityIdMap = new Int2ObjectOpenHashMap<>();
         private final BinaryBuffer buffer = PooledBuffers.get();
 
-        private ViewableStorage(Viewable viewable) {
-            this.viewable = new WeakReference<>(viewable);
+        {
             PooledBuffers.registerBuffer(this, buffer);
         }
 
-        private synchronized void append(ServerPacket serverPacket, PlayerConnection connection) {
+        private synchronized void append(Viewable viewable, ServerPacket serverPacket, Player player, PlayerConnection connection) {
 
             PacketAdapter adapter = VersionUtils.V1_17_PACKET_ADAPTER;
 
@@ -262,73 +267,67 @@ public final class PacketUtils {
             final ByteBuffer framedPacket = createFramedPacket(serverPacket, adapter).flip();
             final int packetSize = framedPacket.limit();
             if (packetSize >= buffer.capacity()) {
-                process(new SingleEntry(framedPacket, connection));
+                process(viewable);
+                for (Player viewer : viewable.getViewers()) {
+                    if (!Objects.equals(player, viewer)) {
+                        writeTo(viewer.getPlayerConnection(), framedPacket.position(0));
+                    }
+                }
                 return;
             }
-            if (!buffer.canWrite(packetSize)) process(null);
+            if (!buffer.canWrite(packetSize)) process(viewable);
             final int start = buffer.writerOffset();
-            buffer.write(framedPacket);
+            this.buffer.write(framedPacket);
             final int end = buffer.writerOffset();
-            if (connection != null) {
-                List<IntIntPair> list = entityIdMap.computeIfAbsent(connection, con -> new ArrayList<>());
-                list.add(IntIntPair.of(start, end));
+            if (player != null) {
+                final long offsets = (long) start << 32 | end & 0xFFFFFFFFL;
+                LongList list = entityIdMap.computeIfAbsent(player.getEntityId(), id -> new LongArrayList());
+                list.add(offsets);
             }
         }
 
-        private synchronized void process(@Nullable SingleEntry singleEntry) {
-            final Viewable viewable;
-            if (buffer.writerOffset() == 0 || (viewable = this.viewable.get()) == null) {
+        private synchronized void process(Viewable viewable) {
+            if (buffer.writerOffset() == 0) {
                 clear();
                 return;
             }
             for (Player player : viewable.getViewers()) {
-                PlayerConnection connection = player.getPlayerConnection();
-                Consumer<ByteBuffer> writer = connection instanceof PlayerSocketConnection
-                        ? ((PlayerSocketConnection) connection)::write :
-                        byteBuffer -> {
-                            // TODO for non-socket connection
-                        };
-
+                final PlayerConnection connection = player.getPlayerConnection();
                 int lastWrite = 0;
-                final List<IntIntPair> pairs = entityIdMap.get(connection);
-                if (pairs != null) {
-                    for (IntIntPair pair : pairs) {
-                        final int start = pair.leftInt();
+                final LongList pairs;
+                if (!entityIdMap.isEmpty() && (pairs = entityIdMap.get(player.getEntityId())) != null) {
+                    for (LongIterator it = pairs.longIterator(); it.hasNext(); ) {
+                        final long offsets = it.nextLong();
+                        final int start = (int) (offsets >> 32);
+                        final int end = (int) offsets;
                         if (start != lastWrite) {
-                            ByteBuffer slice = buffer.asByteBuffer(lastWrite, start - lastWrite);
-                            writer.accept(slice);
+                            ByteBuffer slice = buffer.view(lastWrite, start);
+                            writeTo(connection, slice);
                         }
-                        lastWrite = pair.rightInt();
+                        lastWrite = end;
                     }
                 }
                 // Write remaining
                 final int remaining = buffer.writerOffset() - lastWrite;
                 if (remaining > 0) {
-                    ByteBuffer remainSlice = buffer.asByteBuffer(lastWrite, remaining);
-                    writer.accept(remainSlice);
-                }
-
-                // Handle single entry
-                if (singleEntry != null && !Objects.equals(singleEntry.exception, connection)) {
-                    writer.accept(singleEntry.buffer.position(0));
+                    ByteBuffer remainSlice = buffer.view(lastWrite, buffer.writerOffset());
+                    writeTo(connection, remainSlice);
                 }
             }
             clear();
         }
 
+        private static void writeTo(PlayerConnection connection, ByteBuffer buffer) {
+            if (connection instanceof PlayerSocketConnection) {
+                ((PlayerSocketConnection) connection).write(buffer);
+                return;
+            }
+            // TODO for non-socket connection
+        }
+
         private void clear() {
             this.entityIdMap.clear();
             this.buffer.clear();
-        }
-
-        private static final class SingleEntry {
-            private final ByteBuffer buffer;
-            private final PlayerConnection exception;
-
-            public SingleEntry(ByteBuffer buffer, PlayerConnection exception) {
-                this.buffer = buffer;
-                this.exception = exception;
-            }
         }
     }
 }
