@@ -171,7 +171,11 @@ public final class PacketUtils {
         synchronized (VIEWABLE_STORAGE_MAP) {
             viewableStorage = VIEWABLE_STORAGE_MAP.computeIfAbsent(viewable, v -> new ViewableStorage());
         }
-        viewableStorage.append(viewable, serverPacket, entity instanceof Player ? (Player) entity : null);
+        if(entity instanceof Player) {
+            viewableStorage.append(viewable, serverPacket, (Player) entity, ((Player) entity).getPlayerConnection());
+        } else {
+            viewableStorage.append(viewable, serverPacket, null, null);
+        }
     }
 
     @ApiStatus.Experimental
@@ -261,7 +265,7 @@ public final class PacketUtils {
             PacketAdapter adapter = VersionUtils.V1_17_PACKET_ADAPTER;
 
             if(connection instanceof PlayerSocketConnection) {
-                adapter = ((PlayerSocketConnection) connection).getPacketAdapter();
+                adapter = connection.getPacketAdapter();
             }
 
             final ByteBuffer framedPacket = createFramedPacket(serverPacket, adapter).flip();
