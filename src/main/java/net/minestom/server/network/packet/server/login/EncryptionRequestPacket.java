@@ -4,6 +4,7 @@ import net.minestom.server.data.type.array.ByteArrayData;
 import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.network.player.PlayerSocketConnection;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -43,6 +44,11 @@ public class EncryptionRequestPacket implements ServerPacket {
 
         publicKey = ByteArrayData.decodeByteArray(reader);
         nonce = ByteArrayData.decodeByteArray(reader);
+    }
+
+    @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        //TODO not sure if needed yet
     }
 
     @Override

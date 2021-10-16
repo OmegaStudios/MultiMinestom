@@ -2,6 +2,7 @@ package net.minestom.server.network.packet.server.login;
 
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
@@ -35,6 +36,11 @@ public class LoginSuccessPacket implements ServerPacket {
     public void read(@NotNull BinaryReader reader) {
         uuid = reader.readUuid();
         username = reader.readSizedString();
+    }
+
+    @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        //TODO not sure if needed yet
     }
 
     @Override

@@ -6,6 +6,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import net.minestom.server.utils.binary.Readable;
@@ -20,6 +21,7 @@ import java.util.function.UnaryOperator;
 
 public class AdvancementsPacket implements ComponentHoldingServerPacket {
 
+    private PacketAdapter packetAdapter;
     public boolean resetAdvancements;
     public AdvancementMapping[] advancementMappings = new AdvancementMapping[0];
     public String[] identifiersToRemove = new String[0];
@@ -66,8 +68,13 @@ public class AdvancementsPacket implements ComponentHoldingServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.ADVANCEMENTS;
+        return this.packetAdapter.getAdvancementsPacket().getId();
     }
 
     @Override

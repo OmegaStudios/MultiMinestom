@@ -3,6 +3,7 @@ package net.minestom.server.network.packet.server.play;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +16,7 @@ import java.io.IOException;
 
 public class NbtQueryResponsePacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     public int transactionId;
     public NBTCompound nbtCompound;
 
@@ -49,7 +51,12 @@ public class NbtQueryResponsePacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.NBT_QUERY_RESPONSE;
+        return this.packetAdapter.getNbtQueryResponsePacket().getId();
     }
 }

@@ -6,6 +6,7 @@ import net.minestom.server.adventure.AdventurePacketConvertor;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import net.minestom.server.utils.validate.Check;
@@ -21,6 +22,7 @@ import java.util.function.UnaryOperator;
  */
 public class TeamsPacket implements ComponentHoldingServerPacket {
 
+    private PacketAdapter packetAdapter;
     /**
      * The registry name of the team
      */
@@ -130,6 +132,11 @@ public class TeamsPacket implements ComponentHoldingServerPacket {
         }
     }
 
+    @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
     /**
      * Gets the identifier of the packet
      *
@@ -137,7 +144,7 @@ public class TeamsPacket implements ComponentHoldingServerPacket {
      */
     @Override
     public int getId() {
-        return ServerPacketIdentifier.TEAMS;
+        return this.packetAdapter.getTeamsPacket().getId();
     }
 
     @Override

@@ -2,6 +2,7 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +13,7 @@ public class PlayerAbilitiesPacket implements ServerPacket {
     public static final byte FLAG_ALLOW_FLYING  = 0x04;
     public static final byte FLAG_INSTANT_BREAK = 0x08;
 
+    private PacketAdapter packetAdapter;
     public byte flags;
     public float flyingSpeed;
     public float fieldViewModifier;
@@ -41,7 +43,12 @@ public class PlayerAbilitiesPacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.PLAYER_ABILITIES;
+        return this.packetAdapter.getPlayerAbilitiesPacket().getId();
     }
 }

@@ -5,12 +5,15 @@ import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import net.minestom.server.utils.binary.Writeable;
 import org.jetbrains.annotations.NotNull;
 
 public class MultiBlockChangePacket implements ServerPacket {
+
+    private PacketAdapter packetAdapter;
     public int chunkX;
     public int chunkZ;
     public int section;
@@ -51,8 +54,13 @@ public class MultiBlockChangePacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.MULTI_BLOCK_CHANGE;
+        return this.packetAdapter.getMultiBlockChangePacket().getId();
     }
 
     public static final class BlockEntry implements Writeable {

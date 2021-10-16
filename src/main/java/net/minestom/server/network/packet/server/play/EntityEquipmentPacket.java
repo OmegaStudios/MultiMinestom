@@ -4,6 +4,7 @@ import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class EntityEquipmentPacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     public int entityId;
     public EquipmentSlot[] slots;
     public ItemStack[] itemStacks;
@@ -67,8 +69,13 @@ public class EntityEquipmentPacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.ENTITY_EQUIPMENT;
+        return this.packetAdapter.getEntityEquipmentPacket().getId();
     }
 
 }

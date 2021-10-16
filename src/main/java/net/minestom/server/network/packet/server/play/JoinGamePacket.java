@@ -4,6 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import net.minestom.server.utils.validate.Check;
@@ -16,6 +17,7 @@ import java.io.IOException;
 
 public class JoinGamePacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     public int entityId;
     public boolean hardcore;
     public GameMode gameMode;
@@ -101,8 +103,13 @@ public class JoinGamePacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.JOIN_GAME;
+        return this.packetAdapter.getJoinGamePacket().getId();
     }
 
 }

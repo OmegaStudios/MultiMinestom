@@ -2,12 +2,14 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
 
 public class UpdateScorePacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     public String entityName;
     public byte action;
     public String objectiveName;
@@ -42,7 +44,12 @@ public class UpdateScorePacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.UPDATE_SCORE;
+        return this.packetAdapter.getUpdateScorePacket().getId();
     }
 }

@@ -2,12 +2,14 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
 
 public class WorldBorderCenterPacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     public double x;
     public double z;
 
@@ -31,7 +33,12 @@ public class WorldBorderCenterPacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.WORLD_BORDER_CENTER;
+        return this.packetAdapter.getWorldBorderCenterPacket().getId();
     }
 }

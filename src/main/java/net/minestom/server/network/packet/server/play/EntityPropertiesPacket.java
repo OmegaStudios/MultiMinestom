@@ -6,6 +6,7 @@ import net.minestom.server.attribute.AttributeModifier;
 import net.minestom.server.attribute.AttributeOperation;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import net.minestom.server.utils.binary.Readable;
@@ -16,6 +17,7 @@ import java.util.Collection;
 
 public class EntityPropertiesPacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     public int entityId;
     public Property[] properties = new Property[0];
 
@@ -43,8 +45,13 @@ public class EntityPropertiesPacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.ENTITY_PROPERTIES;
+        return this.packetAdapter.getEntityPropertiesPacket().getId();
     }
 
     public static class Property implements Writeable, Readable {

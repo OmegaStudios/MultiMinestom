@@ -6,6 +6,7 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +17,7 @@ import java.util.function.UnaryOperator;
 
 public class PlayerInfoPacket implements ComponentHoldingServerPacket {
 
+    private PacketAdapter packetAdapter;
     public Action action;
     public List<PlayerInfo> playerInfos;
 
@@ -76,8 +78,13 @@ public class PlayerInfoPacket implements ComponentHoldingServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.PLAYER_INFO;
+        return this.packetAdapter.getPlayerInfoPacket().getId();
     }
 
     @Override

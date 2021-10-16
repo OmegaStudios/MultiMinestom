@@ -3,12 +3,14 @@ package net.minestom.server.network.packet.server.play;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
 
 public class PluginMessagePacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     public String channel;
     public byte[] data;
 
@@ -34,8 +36,13 @@ public class PluginMessagePacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.PLUGIN_MESSAGE;
+        return this.packetAdapter.getPluginMessagePacket().getId();
     }
 
     /**

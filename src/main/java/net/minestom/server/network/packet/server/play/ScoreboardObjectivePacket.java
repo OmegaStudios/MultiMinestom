@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
@@ -14,6 +15,7 @@ import java.util.function.UnaryOperator;
 
 public class ScoreboardObjectivePacket implements ComponentHoldingServerPacket {
 
+    private PacketAdapter packetAdapter;
     /**
      * An unique name for the objective
      */
@@ -62,8 +64,13 @@ public class ScoreboardObjectivePacket implements ComponentHoldingServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.SCOREBOARD_OBJECTIVE;
+        return this.packetAdapter.getScoreboardObjectivePacket().getId();
     }
 
     @Override

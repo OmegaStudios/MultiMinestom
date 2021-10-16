@@ -2,6 +2,7 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import net.minestom.server.coordinate.Pos;
@@ -9,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SpawnExperienceOrbPacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     public int entityId;
     public Pos position;
     public short expCount;
@@ -34,7 +36,12 @@ public class SpawnExperienceOrbPacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.SPAWN_EXPERIENCE_ORB;
+        return this.packetAdapter.getSpawnExperienceOrbPacket().getId();
     }
 }

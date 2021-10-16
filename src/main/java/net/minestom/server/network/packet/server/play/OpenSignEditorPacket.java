@@ -2,6 +2,7 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import net.minestom.server.coordinate.Point;
@@ -10,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class OpenSignEditorPacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     /**
      * WARNING: There must be a sign in this location (you can send a BlockChangePacket beforehand)
      */
@@ -30,7 +32,12 @@ public class OpenSignEditorPacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.OPEN_SIGN_EDITOR;
+        return this.packetAdapter.getOpenSignEditorPacket().getId();
     }
 }

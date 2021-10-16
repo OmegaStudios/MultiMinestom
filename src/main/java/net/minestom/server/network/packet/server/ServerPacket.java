@@ -1,5 +1,6 @@
 package net.minestom.server.network.packet.server;
 
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.Readable;
@@ -16,6 +17,9 @@ public interface ServerPacket extends Readable, Writeable {
         // FIXME: remove when all packets are written and read properly
         throw new UnsupportedOperationException("WIP: This packet is not set up to be read from Minestom code at the moment.");
     }
+
+    //sets the packet adapter for this packet
+    void setPacketAdapter(PacketAdapter packetAdapter);
 
     /**
      * Gets the id of this packet.

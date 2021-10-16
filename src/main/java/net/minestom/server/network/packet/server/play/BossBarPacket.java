@@ -6,6 +6,7 @@ import net.minestom.server.adventure.AdventurePacketConvertor;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +18,7 @@ import java.util.function.UnaryOperator;
 
 public class BossBarPacket implements ComponentHoldingServerPacket {
 
+    private PacketAdapter packetAdapter;
     public UUID uuid = new UUID(0, 0);
     public Action action = Action.ADD;
 
@@ -94,8 +96,13 @@ public class BossBarPacket implements ComponentHoldingServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.BOSS_BAR;
+        return this.packetAdapter.getBossBarPacket().getId();
     }
 
     @Override

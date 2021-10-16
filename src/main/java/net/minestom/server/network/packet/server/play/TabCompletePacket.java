@@ -5,6 +5,7 @@ import net.minestom.server.adventure.ComponentHolder;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +18,7 @@ import java.util.function.UnaryOperator;
 
 public class TabCompletePacket implements ComponentHoldingServerPacket {
 
+    private PacketAdapter packetAdapter;
     public int transactionId;
     public int start;
     public int length;
@@ -65,8 +67,13 @@ public class TabCompletePacket implements ComponentHoldingServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.TAB_COMPLETE;
+        return this.packetAdapter.getTabCompletePacket().getId();
     }
 
     @Override

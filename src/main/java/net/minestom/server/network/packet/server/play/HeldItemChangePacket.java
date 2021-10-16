@@ -2,12 +2,14 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
 
 public class HeldItemChangePacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     public byte slot;
 
     public HeldItemChangePacket(byte slot) {
@@ -29,7 +31,12 @@ public class HeldItemChangePacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.HELD_ITEM_CHANGE;
+        return this.packetAdapter.getHeldItemChangePacket().getId();
     }
 }

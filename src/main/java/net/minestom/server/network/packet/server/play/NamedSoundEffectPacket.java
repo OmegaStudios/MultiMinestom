@@ -4,12 +4,14 @@ import net.kyori.adventure.sound.Sound.Source;
 import net.minestom.server.adventure.AdventurePacketConvertor;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
 
 public class NamedSoundEffectPacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     public String soundName;
     public Source soundSource;
     public int x, y, z;
@@ -44,7 +46,12 @@ public class NamedSoundEffectPacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.NAMED_SOUND_EFFECT;
+        return this.packetAdapter.getNamedSoundEffectPacket().getId();
     }
 }

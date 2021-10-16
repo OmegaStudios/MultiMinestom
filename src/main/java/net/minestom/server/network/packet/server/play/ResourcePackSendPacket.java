@@ -3,6 +3,7 @@ package net.minestom.server.network.packet.server.play;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.resourcepack.ResourcePack;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -10,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ResourcePackSendPacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     public String url = "";
     public String hash = "0000000000000000000000000000000000000000"; // Size 40
     public boolean forced;
@@ -53,7 +55,12 @@ public class ResourcePackSendPacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.RESOURCE_PACK_SEND;
+        return this.packetAdapter.getResourcePackSendPacket().getId();
     }
 }

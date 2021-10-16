@@ -78,448 +78,448 @@ public class V1_8PacketAdapter implements PacketAdapter {
     }
 
     @Override
-    public VersionedPacket CloseWindowPacket() {
+    public VersionedPacket getCloseWindowPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket CollectItemPacket() {
+    public VersionedPacket getCollectItemPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket CraftRecipeResponsePacket() {
+    public VersionedPacket getCraftRecipeResponsePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket DeathCombatEventPacket() {
+    public VersionedPacket getDeathCombatEventPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket DeclareCommandsPacket() {
+    public VersionedPacket getDeclareCommandsPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket DeclareRecipesPacket() {
+    public VersionedPacket getDeclareRecipesPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket DestroyEntitiesPacket() {
+    public VersionedPacket getDestroyEntitiesPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket DisconnectPacket() {
+    public VersionedPacket getDisconnectPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket DisplayScoreboardPacket() {
+    public VersionedPacket getDisplayScoreboardPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EffectPacket() {
+    public VersionedPacket getEffectPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EndCombatEventPacket() {
+    public VersionedPacket getEndCombatEventPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EnterCombatEventPacket() {
+    public VersionedPacket getEnterCombatEventPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EntityAnimationPacket() {
+    public VersionedPacket getEntityAnimationPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EntityEffectPacket() {
+    public VersionedPacket getEntityEffectPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EntityEquipmentPacket() {
+    public VersionedPacket getEntityEquipmentPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EntityHeadLookPacket() {
+    public VersionedPacket getEntityHeadLookPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EntityMetaDataPacket() {
+    public VersionedPacket getEntityMetaDataPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EntityPositionAndRotationPacket() {
+    public VersionedPacket getEntityPositionAndRotationPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EntityPositionPacket() {
+    public VersionedPacket getEntityPositionPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EntityPropertiesPacket() {
+    public VersionedPacket getEntityPropertiesPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EntityRotationPacket() {
+    public VersionedPacket getEntityRotationPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EntitySoundEffectPacket() {
+    public VersionedPacket getEntitySoundEffectPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EntityStatusPacket() {
+    public VersionedPacket getEntityStatusPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EntityTeleportPacket() {
+    public VersionedPacket getEntityTeleportPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket EntityVelocityPacket() {
+    public VersionedPacket getEntityVelocityPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket ExplosionPacket() {
+    public VersionedPacket getExplosionPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket FacePlayerPacket() {
+    public VersionedPacket getFacePlayerPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket HeldItemChangePacket() {
+    public VersionedPacket getHeldItemChangePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket InitializeWorldBorderPacket() {
+    public VersionedPacket getInitializeWorldBorderPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket JoinGamePacket() {
+    public VersionedPacket getJoinGamePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket KeepAlivePacket() {
+    public VersionedPacket getKeepAlivePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket MapDataPacket() {
+    public VersionedPacket getMapDataPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket MultiBlockChangePacket() {
+    public VersionedPacket getMultiBlockChangePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket NamedSoundEffectPacket() {
+    public VersionedPacket getNamedSoundEffectPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket NbtQueryResponsePacket() {
+    public VersionedPacket getNbtQueryResponsePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket OpenBookPacket() {
+    public VersionedPacket getOpenBookPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket OpenHorseWindowPacket() {
+    public VersionedPacket getOpenHorseWindowPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket OpenSignEditorPacket() {
+    public VersionedPacket getOpenSignEditorPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket OpenWindowPacket() {
+    public VersionedPacket getOpenWindowPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket ParticlePacket() {
+    public VersionedPacket getParticlePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket PingPacket() {
+    public VersionedPacket getPingPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket PlayerAbilitiesPacket() {
+    public VersionedPacket getPlayerAbilitiesPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket PlayerInfoPacket() {
+    public VersionedPacket getPlayerInfoPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket PlayerListHeaderAndFooterPacket() {
+    public VersionedPacket getPlayerListHeaderAndFooterPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket PlayerPositionAndLookPacket() {
+    public VersionedPacket getPlayerPositionAndLookPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket PluginMessagePacket() {
+    public VersionedPacket getPluginMessagePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket RemoveEntityEffectPacket() {
+    public VersionedPacket getRemoveEntityEffectPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket ResourcePackSendPacket() {
+    public VersionedPacket getResourcePackSendPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket RespawnPacket() {
+    public VersionedPacket getRespawnPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket ScoreboardObjectivePacket() {
+    public VersionedPacket getScoreboardObjectivePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SculkVibrationSignalPacket() {
+    public VersionedPacket getSculkVibrationSignalPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SelectAdvancementTabPacket() {
+    public VersionedPacket getSelectAdvancementTabPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket ServerDifficultyPacket() {
+    public VersionedPacket getServerDifficultyPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SetCooldownPacket() {
+    public VersionedPacket getSetCooldownPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SetExperiencePacket() {
+    public VersionedPacket getSetExperiencePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SetPassengersPacket() {
+    public VersionedPacket getSetPassengersPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SetSlotPacket() {
+    public VersionedPacket getSetSlotPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SetTitleSubTitlePacket() {
+    public VersionedPacket getSetTitleSubTitlePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SetTitleTextPacket() {
+    public VersionedPacket getSetTitleTextPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SetTitleTimePacket() {
+    public VersionedPacket getSetTitleTimePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SoundEffectPacket() {
+    public VersionedPacket getSoundEffectPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SpawnEntityPacket() {
+    public VersionedPacket getSpawnEntityPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SpawnExperienceOrbPacket() {
+    public VersionedPacket getSpawnExperienceOrbPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SpawnLivingEntityPacket() {
+    public VersionedPacket getSpawnLivingEntityPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SpawnPaintingPacket() {
+    public VersionedPacket getSpawnPaintingPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SpawnPlayerPacket() {
+    public VersionedPacket getSpawnPlayerPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket SpawnPositionPacket() {
+    public VersionedPacket getSpawnPositionPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket StatisticsPacket() {
+    public VersionedPacket getStatisticsPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket StopSoundPacket() {
+    public VersionedPacket getStopSoundPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket TabCompletePacket() {
+    public VersionedPacket getTabCompletePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket TagsPacket() {
+    public VersionedPacket getTagsPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket TeamsPacket() {
+    public VersionedPacket getTeamsPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket TimeUpdatePacket() {
+    public VersionedPacket getTimeUpdatePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket TradeListPacket() {
+    public VersionedPacket getTradeListPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket UnloadChunkPacket() {
+    public VersionedPacket getUnloadChunkPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket UnlockRecipesPacket() {
+    public VersionedPacket getUnlockRecipesPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket UpdateHealthPacket() {
+    public VersionedPacket getUpdateHealthPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket UpdateLightPacket() {
+    public VersionedPacket getUpdateLightPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket UpdateScorePacket() {
+    public VersionedPacket getUpdateScorePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket UpdateViewDistancePacket() {
+    public VersionedPacket getUpdateViewDistancePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket UpdateViewPositionPacket() {
+    public VersionedPacket getUpdateViewPositionPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket VehicleMovePacket() {
+    public VersionedPacket getVehicleMovePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket WindowItemsPacket() {
+    public VersionedPacket getWindowItemsPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket WindowPropertyPacket() {
+    public VersionedPacket getWindowPropertyPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket WorldBorderCenterPacket() {
+    public VersionedPacket getWorldBorderCenterPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket WorldBorderLerpSizePacket() {
+    public VersionedPacket getWorldBorderLerpSizePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket WorldBorderSizePacket() {
+    public VersionedPacket getWorldBorderSizePacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket WorldBorderWarningDelayPacket() {
+    public VersionedPacket getWorldBorderWarningDelayPacket() {
         return null;
     }
 
     @Override
-    public VersionedPacket WorldBorderWarningReachPacket() {
+    public VersionedPacket getWorldBorderWarningReachPacket() {
         return null;
     }
-    
+
 }

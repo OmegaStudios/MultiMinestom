@@ -2,12 +2,14 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
 
 public class EntityStatusPacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     public int entityId;
     public byte status;
 
@@ -33,7 +35,12 @@ public class EntityStatusPacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.ENTITY_STATUS;
+        return this.packetAdapter.getEntityStatusPacket().getId();
     }
 }

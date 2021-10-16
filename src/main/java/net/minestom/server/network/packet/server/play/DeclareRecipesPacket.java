@@ -3,6 +3,7 @@ package net.minestom.server.network.packet.server.play;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import net.minestom.server.utils.binary.Readable;
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class DeclareRecipesPacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     public DeclaredRecipe[] recipes = new DeclaredRecipe[0];
 
     public DeclareRecipesPacket() {
@@ -75,8 +77,13 @@ public class DeclareRecipesPacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.DECLARE_RECIPES;
+        return this.packetAdapter.getDeclareRecipesPacket().getId();
     }
 
     public abstract static class DeclaredRecipe implements Writeable, Readable {

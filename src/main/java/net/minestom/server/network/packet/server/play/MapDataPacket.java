@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import net.minestom.server.utils.binary.Readable;
@@ -15,6 +16,7 @@ import java.util.function.UnaryOperator;
 
 public class MapDataPacket implements ComponentHoldingServerPacket {
 
+    private PacketAdapter packetAdapter;
     public int mapId;
     public byte scale;
     public boolean locked;
@@ -97,8 +99,13 @@ public class MapDataPacket implements ComponentHoldingServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.MAP_DATA;
+        return this.packetAdapter.getMapDataPacket().getId();
     }
 
     @Override

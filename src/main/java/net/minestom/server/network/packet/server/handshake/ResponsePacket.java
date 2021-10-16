@@ -1,6 +1,7 @@
 package net.minestom.server.network.packet.server.handshake;
 
 import net.minestom.server.network.packet.server.ServerPacket;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
@@ -25,6 +26,11 @@ public class ResponsePacket implements ServerPacket {
     @Override
     public void read(@NotNull BinaryReader reader) {
         jsonResponse = reader.readSizedString();
+    }
+
+    @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        //TODO not sure if needed yet
     }
 
     @Override

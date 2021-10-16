@@ -5,6 +5,7 @@ import net.minestom.server.message.ChatPosition;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
@@ -22,6 +23,7 @@ import java.util.function.UnaryOperator;
 public class ChatMessagePacket implements ComponentHoldingServerPacket {
     private static final UUID NULL_UUID = new UUID(0, 0);
 
+    private PacketAdapter packetAdapter;
     public Component message;
     public ChatPosition position;
     public UUID uuid;
@@ -51,8 +53,13 @@ public class ChatMessagePacket implements ComponentHoldingServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.CHAT_MESSAGE;
+        return this.packetAdapter.getChatMessagePacket().getId();
     }
 
     @Override

@@ -3,6 +3,7 @@ package net.minestom.server.network.packet.server.play;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 public class SpawnPlayerPacket implements ServerPacket {
 
+    private PacketAdapter packetAdapter;
     public int entityId;
     public UUID playerUuid;
     public Pos position;
@@ -46,7 +48,12 @@ public class SpawnPlayerPacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.SPAWN_PLAYER;
+        return this.packetAdapter.getSpawnPlayerPacket().getId();
     }
 }

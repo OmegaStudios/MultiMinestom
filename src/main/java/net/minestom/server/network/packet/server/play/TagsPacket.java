@@ -22,6 +22,7 @@ public class TagsPacket implements ServerPacket {
         return PacketUtils.allocateTrimmedPacket(new TagsPacket(MinecraftServer.getTagManager().getTagMap()), adapter);
     }
 
+    private PacketAdapter packetAdapter;
     public Map<Tag.BasicType, List<Tag>> tagsMap;
 
     public TagsPacket(Map<Tag.BasicType, List<Tag>> tagsMap) {
@@ -73,7 +74,12 @@ public class TagsPacket implements ServerPacket {
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.TAGS;
+        return this.packetAdapter.getTagsPacket().getId();
     }
 }

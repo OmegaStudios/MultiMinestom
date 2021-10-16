@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.ServerPacketIdentifier;
+import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +17,8 @@ import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 public class PlayerListHeaderAndFooterPacket implements ComponentHoldingServerPacket {
+
+    private PacketAdapter packetAdapter;
     public Component header;
     public Component footer;
 
@@ -57,7 +60,12 @@ public class PlayerListHeaderAndFooterPacket implements ComponentHoldingServerPa
     }
 
     @Override
+    public void setPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapter = packetAdapter;
+    }
+
+    @Override
     public int getId() {
-        return ServerPacketIdentifier.PLAYER_LIST_HEADER_AND_FOOTER;
+        return this.packetAdapter.getPlayerListHeaderAndFooterPacket().getId();
     }
 }
