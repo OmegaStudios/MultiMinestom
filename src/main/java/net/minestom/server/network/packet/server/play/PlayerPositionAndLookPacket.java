@@ -2,7 +2,6 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -29,16 +28,7 @@ public class PlayerPositionAndLookPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeDouble(position.x());
-        writer.writeDouble(position.y());
-        writer.writeDouble(position.z());
-
-        writer.writeFloat(position.yaw());
-        writer.writeFloat(position.pitch());
-
-        writer.writeByte(flags);
-        writer.writeVarInt(teleportId);
-        writer.writeBoolean(dismountVehicle);
+        this.packetAdapter.getPlayerPositionAndLookPacket().writePacket(writer, this);
     }
 
     @Override

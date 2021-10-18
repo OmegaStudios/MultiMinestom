@@ -4,7 +4,6 @@ import net.minestom.server.coordinate.Vec;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -26,9 +25,7 @@ public class MultiBlockChangePacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeLong(((long) (chunkX & 0x3FFFFF) << 42) | (section & 0xFFFFF) | ((long) (chunkZ & 0x3FFFFF) << 20));
-        writer.writeBoolean(suppressLightUpdates);
-        writer.writeArray(blockChanges);
+        this.packetAdapter.getMultiBlockChangePacket().writePacket(writer, this);
     }
 
     @Override

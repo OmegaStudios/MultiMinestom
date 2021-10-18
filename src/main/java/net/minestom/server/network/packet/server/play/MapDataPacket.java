@@ -3,7 +3,6 @@ package net.minestom.server.network.packet.server.play;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -35,37 +34,7 @@ public class MapDataPacket implements ComponentHoldingServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(mapId);
-        writer.writeByte(scale);
-        writer.writeBoolean(locked);
-        writer.writeBoolean(trackingPosition);
-
-        if (trackingPosition) {
-            if (icons != null && icons.length > 0) {
-                writer.writeVarInt(icons.length);
-                for (Icon icon : icons) {
-                    icon.write(writer);
-                }
-            } else {
-                writer.writeVarInt(0);
-            }
-        }
-
-        writer.writeByte((byte) columns);
-        if (columns <= 0) {
-            return;
-        }
-
-        writer.writeByte((byte) rows);
-        writer.writeByte(x);
-        writer.writeByte(z);
-        if (data != null && data.length > 0) {
-            writer.writeVarInt(data.length);
-            writer.writeBytes(data);
-        } else {
-            writer.writeVarInt(0);
-        }
-
+        this.packetAdapter.getMapDataPacket().writePacket(writer, this);
     }
 
     @Override

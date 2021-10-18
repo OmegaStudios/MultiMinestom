@@ -2,7 +2,6 @@ package net.minestom.server.network.packet.server.play;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -27,7 +26,7 @@ public class SetTitleSubTitlePacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeComponent(subtitle);
+        this.packetAdapter.getSetTitleSubTitlePacket().writePacket(writer, this);
     }
 
     @Override

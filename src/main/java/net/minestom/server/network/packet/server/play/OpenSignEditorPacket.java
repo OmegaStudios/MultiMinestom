@@ -1,12 +1,11 @@
 package net.minestom.server.network.packet.server.play;
 
+import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
-import net.minestom.server.coordinate.Point;
-import net.minestom.server.coordinate.Vec;
 import org.jetbrains.annotations.NotNull;
 
 public class OpenSignEditorPacket implements ServerPacket {
@@ -23,7 +22,7 @@ public class OpenSignEditorPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeBlockPosition(signPosition);
+        this.packetAdapter.getOpenSignEditorPacket().writePacket(writer, this);
     }
 
     @Override

@@ -1,27 +1,27 @@
 package net.minestom.server.network.packet.server.multiversion.v1_17.impl;
 
-import net.kyori.adventure.text.Component;
-import net.minestom.server.adventure.ComponentHolder;
-import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.VersionedPacket;
 import net.minestom.server.network.packet.server.multiversion.v1_17.V1_17ServerPacketIdentifier;
-import net.minestom.server.utils.binary.BinaryReader;
+import net.minestom.server.network.packet.server.play.TabCompletePacket;
 import net.minestom.server.utils.binary.BinaryWriter;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.UnaryOperator;
 
 public class V1_17TabCompletePacket implements VersionedPacket {
 
     @Override
     public void writePacket(BinaryWriter writer, ServerPacket packet) {
+        TabCompletePacket packet_ = (TabCompletePacket) packet;
+        writer.writeVarInt(packet_.transactionId);
+        writer.writeVarInt(packet_.start);
+        writer.writeVarInt(packet_.length);
 
+        writer.writeVarInt(packet_.matches.length);
+        for (TabCompletePacket.Match match : packet_.matches) {
+            writer.writeSizedString(match.match);
+            writer.writeBoolean(match.hasTooltip);
+            if (match.hasTooltip)
+                writer.writeComponent(match.tooltip);
+        }
     }
 
     @Override

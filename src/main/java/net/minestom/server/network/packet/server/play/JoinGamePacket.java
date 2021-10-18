@@ -3,7 +3,6 @@ package net.minestom.server.network.packet.server.play;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -38,39 +37,7 @@ public class JoinGamePacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeInt(entityId);
-        writer.writeBoolean(hardcore);
-        writer.writeByte(gameMode.getId());
-
-        if (previousGameMode == null) {
-            writer.writeByte(gameMode.getId());
-        } else {
-            writer.writeByte(previousGameMode.getId());
-        }
-
-        //array of worlds
-        writer.writeVarInt(1);
-        writer.writeSizedString("minestom:world");
-        NBTCompound nbt = new NBTCompound();
-        NBTCompound dimensions = MinecraftServer.getDimensionTypeManager().toNBT();
-        NBTCompound biomes = MinecraftServer.getBiomeManager().toNBT();
-
-        nbt.set("minecraft:dimension_type", dimensions);
-        nbt.set("minecraft:worldgen/biome", biomes);
-
-        writer.writeNBT("", nbt);
-        writer.writeNBT("", dimensionType.toNBT());
-
-        writer.writeSizedString(dimensionType.getName().toString());
-        writer.writeLong(hashedSeed);
-        writer.writeVarInt(maxPlayers);
-        writer.writeVarInt(viewDistance);
-        writer.writeBoolean(reducedDebugInfo);
-        writer.writeBoolean(enableRespawnScreen);
-        //debug
-        writer.writeBoolean(isDebug);
-        //is flat
-        writer.writeBoolean(isFlat);
+        this.packetAdapter.getJoinGamePacket().writePacket(writer, this);
     }
 
     @Override

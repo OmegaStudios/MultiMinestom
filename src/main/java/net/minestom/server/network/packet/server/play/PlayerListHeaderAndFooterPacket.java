@@ -3,7 +3,6 @@ package net.minestom.server.network.packet.server.play;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -13,7 +12,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 public class PlayerListHeaderAndFooterPacket implements ComponentHoldingServerPacket {
@@ -33,8 +31,7 @@ public class PlayerListHeaderAndFooterPacket implements ComponentHoldingServerPa
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeComponent(Objects.requireNonNullElseGet(header, Component::empty));
-        writer.writeComponent(Objects.requireNonNullElseGet(footer, Component::empty));
+        this.packetAdapter.getPlayerListHeaderAndFooterPacket().writePacket(writer, this);
     }
 
     @Override

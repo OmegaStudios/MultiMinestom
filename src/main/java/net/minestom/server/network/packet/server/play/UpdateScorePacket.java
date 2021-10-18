@@ -1,7 +1,6 @@
 package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -25,12 +24,7 @@ public class UpdateScorePacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeSizedString(entityName);
-        writer.writeByte(action);
-        writer.writeSizedString(objectiveName);
-        if (action != 1) {
-            writer.writeVarInt(value);
-        }
+        this.packetAdapter.getUpdateScorePacket().writePacket(writer, this);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -20,16 +19,7 @@ public class ExplosionPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeFloat(x);
-        writer.writeFloat(y);
-        writer.writeFloat(z);
-        writer.writeFloat(radius);
-        writer.writeVarInt(records.length / 3); // each record is 3 bytes long
-        for (byte record : records)
-            writer.writeByte(record);
-        writer.writeFloat(playerMotionX);
-        writer.writeFloat(playerMotionY);
-        writer.writeFloat(playerMotionZ);
+        this.packetAdapter.getExplosionPacket().writePacket(writer, this);
     }
 
     @Override

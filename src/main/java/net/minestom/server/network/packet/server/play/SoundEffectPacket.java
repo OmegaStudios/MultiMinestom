@@ -1,14 +1,12 @@
 package net.minestom.server.network.packet.server.play;
 
 import net.kyori.adventure.sound.Sound.Source;
-import net.minestom.server.adventure.AdventurePacketConvertor;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.sound.SoundEvent;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
-import net.minestom.server.coordinate.Pos;
 import org.jetbrains.annotations.NotNull;
 
 public class SoundEffectPacket implements ServerPacket {
@@ -40,13 +38,7 @@ public class SoundEffectPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(soundId);
-        writer.writeVarInt(AdventurePacketConvertor.getSoundSourceValue(soundSource));
-        writer.writeInt(x * 8);
-        writer.writeInt(y * 8);
-        writer.writeInt(z * 8);
-        writer.writeFloat(volume);
-        writer.writeFloat(pitch);
+        this.packetAdapter.getSoundEffectPacket().writePacket(writer, this);
     }
 
     @Override

@@ -19,7 +19,6 @@ import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.network.packet.server.multiversion.VersionUtils;
-import net.minestom.server.network.packet.server.multiversion.v1_17.V1_17PacketAdapter;
 import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.network.player.PlayerSocketConnection;
 import net.minestom.server.network.socket.Server;
@@ -233,7 +232,7 @@ public final class PacketUtils {
     @ApiStatus.Internal
     public static ByteBuffer createFramedPacket(@NotNull ServerPacket packet, boolean compression, PacketAdapter adapter) {
         ByteBuffer buffer = PACKET_BUFFER.get().clear();
-        //TODO
+        packet.setPacketAdapter(adapter);
         writeFramedPacket(buffer, packet, compression);
         return buffer;
     }

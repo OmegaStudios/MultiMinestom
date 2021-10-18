@@ -2,7 +2,6 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -31,10 +30,7 @@ public class EntityVelocityPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(entityId);
-        writer.writeShort(velocityX);
-        writer.writeShort(velocityY);
-        writer.writeShort(velocityZ);
+        this.packetAdapter.getEntityVelocityPacket().writePacket(writer, this);
     }
 
     @Override

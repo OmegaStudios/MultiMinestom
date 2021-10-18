@@ -1,7 +1,6 @@
 package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -22,17 +21,7 @@ public class FacePlayerPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(facePosition.ordinal());
-        writer.writeDouble(targetX);
-        writer.writeDouble(targetY);
-        writer.writeDouble(targetZ);
-
-        final boolean isEntity = entityId > 0;
-        writer.writeBoolean(isEntity);
-        if (isEntity) {
-            writer.writeVarInt(entityId);
-            writer.writeVarInt(entityFacePosition.ordinal());
-        }
+        this.packetAdapter.getFacePlayerPacket().writePacket(writer, this);
     }
 
     @Override

@@ -2,7 +2,6 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -30,17 +29,7 @@ public class RespawnPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeNBT("", dimensionType.toNBT());
-
-        // Warning: must be different for each dimension type! Otherwise the client seems to cache the world name
-        writer.writeSizedString(dimensionType.getName().toString());
-
-        writer.writeLong(hashedSeed);
-        writer.writeByte(gameMode.getId());
-        writer.writeByte(gameMode.getId()); // Hardcore flag not included
-        writer.writeBoolean(isDebug);
-        writer.writeBoolean(isFlat);
-        writer.writeBoolean(copyMeta);
+        this.packetAdapter.getRespawnPacket().writePacket(writer, this);
     }
 
     @Override

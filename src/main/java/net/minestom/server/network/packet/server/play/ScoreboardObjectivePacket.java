@@ -3,7 +3,6 @@ package net.minestom.server.network.packet.server.play;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -43,13 +42,7 @@ public class ScoreboardObjectivePacket implements ComponentHoldingServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeSizedString(objectiveName);
-        writer.writeByte(mode);
-
-        if (mode == 0 || mode == 2) {
-            writer.writeComponent(objectiveValue);
-            writer.writeVarInt(type.ordinal());
-        }
+        this.packetAdapter.getScoreboardObjectivePacket().writePacket(writer, this);
     }
 
     @Override

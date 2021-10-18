@@ -2,10 +2,8 @@ package net.minestom.server.network.packet.server.play;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.minestom.server.adventure.AdventurePacketConvertor;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -77,33 +75,7 @@ public class TeamsPacket implements ComponentHoldingServerPacket {
      */
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeSizedString(this.teamName);
-        writer.writeByte((byte) this.action.ordinal());
-
-        switch (action) {
-            case CREATE_TEAM:
-            case UPDATE_TEAM_INFO:
-                writer.writeComponent(this.teamDisplayName);
-                writer.writeByte(this.friendlyFlags);
-                writer.writeSizedString(this.nameTagVisibility.getIdentifier());
-                writer.writeSizedString(this.collisionRule.getIdentifier());
-                writer.writeVarInt(AdventurePacketConvertor.getNamedTextColorValue(this.teamColor));
-                writer.writeComponent(this.teamPrefix);
-                writer.writeComponent(this.teamSuffix);
-                break;
-            case REMOVE_TEAM:
-
-                break;
-        }
-
-        if (action == Action.CREATE_TEAM || action == Action.ADD_PLAYERS_TEAM || action == Action.REMOVE_PLAYERS_TEAM) {
-            if (entities == null || entities.length == 0) {
-                writer.writeVarInt(0); // Empty
-            } else {
-                writer.writeStringArray(entities);
-            }
-        }
-
+        this.packetAdapter.getTeamsPacket().writePacket(writer, this);
     }
 
     @Override

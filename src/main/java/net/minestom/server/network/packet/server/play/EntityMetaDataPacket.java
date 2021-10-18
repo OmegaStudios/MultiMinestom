@@ -2,7 +2,6 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.entity.Metadata;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -29,16 +28,7 @@ public class EntityMetaDataPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(entityId);
-
-        if (entries != null) {
-            // Write all the fields
-            for (Metadata.Entry<?> entry : entries) {
-                entry.write(writer);
-            }
-        }
-
-        writer.writeByte((byte) 0xFF); // End
+        this.packetAdapter.getEntityMetaDataPacket().writePacket(writer, this);
     }
 
     @Override

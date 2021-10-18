@@ -3,7 +3,6 @@ package net.minestom.server.network.packet.server.play;
 import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -24,29 +23,7 @@ public class EntityEquipmentPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(entityId);
-
-        if (slots == null || itemStacks == null) {
-            throw new IllegalArgumentException("You need to specify at least one slot and one item");
-        }
-
-        if (slots.length != itemStacks.length) {
-            throw new IllegalArgumentException("You need the same amount of slots and items");
-        }
-
-        for (int i = 0; i < slots.length; i++) {
-            final EquipmentSlot slot = slots[i];
-            final ItemStack itemStack = itemStacks[i];
-            final boolean last = i == slots.length - 1;
-
-            byte slotEnum = (byte) slot.ordinal();
-            if (!last) {
-                slotEnum |= 0x80;
-            }
-
-            writer.writeByte(slotEnum);
-            writer.writeItemStack(itemStack);
-        }
+        this.packetAdapter.getEntityEquipmentPacket().writePacket(writer, this);
     }
 
     @Override

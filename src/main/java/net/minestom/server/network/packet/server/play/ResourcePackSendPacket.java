@@ -2,7 +2,6 @@ package net.minestom.server.network.packet.server.play;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.resourcepack.ResourcePack;
 import net.minestom.server.utils.binary.BinaryReader;
@@ -29,15 +28,7 @@ public class ResourcePackSendPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeSizedString(url);
-        writer.writeSizedString(hash);
-        writer.writeBoolean(forced);
-        if (forcedMessage != null) {
-            writer.writeBoolean(true);
-            writer.writeComponent(forcedMessage);
-        } else {
-            writer.writeBoolean(false);
-        }
+        this.packetAdapter.getResourcePackSendPacket().writePacket(writer, this);
     }
 
     @Override

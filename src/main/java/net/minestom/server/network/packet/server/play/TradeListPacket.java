@@ -2,7 +2,6 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -29,15 +28,7 @@ public class TradeListPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(windowId);
-        writer.writeByte((byte) trades.length);
-        for (Trade trade : trades) {
-            trade.write(writer);
-        }
-        writer.writeVarInt(villagerLevel);
-        writer.writeVarInt(experience);
-        writer.writeBoolean(regularVillager);
-        writer.writeBoolean(canRestock);
+        this.packetAdapter.getTradeListPacket().writePacket(writer, this);
     }
 
     @Override

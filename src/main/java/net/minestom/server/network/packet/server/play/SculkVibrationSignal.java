@@ -2,7 +2,6 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -23,7 +22,7 @@ public class SculkVibrationSignal implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-
+        this.packetAdapter.getSculkVibrationSignalPacket().writePacket(writer, this);
     }
 
     @Override

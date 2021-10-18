@@ -5,7 +5,6 @@ import net.minestom.server.advancements.FrameType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -32,18 +31,7 @@ public class AdvancementsPacket implements ComponentHoldingServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeBoolean(resetAdvancements);
-
-        writer.writeVarInt(advancementMappings.length);
-        for (AdvancementMapping advancementMapping : advancementMappings) {
-            advancementMapping.write(writer);
-        }
-        writer.writeStringArray(identifiersToRemove);
-
-        writer.writeVarInt(progressMappings.length);
-        for (ProgressMapping progressMapping : progressMappings) {
-            progressMapping.write(writer);
-        }
+        this.packetAdapter.getAdvancementsPacket().writePacket(writer, this);
     }
 
     @Override

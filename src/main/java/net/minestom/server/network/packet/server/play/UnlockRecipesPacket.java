@@ -1,7 +1,6 @@
 package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -32,24 +31,7 @@ public class UnlockRecipesPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(mode);
-
-        writer.writeBoolean(craftingRecipeBookOpen);
-        writer.writeBoolean(craftingRecipeBookFilterActive);
-        writer.writeBoolean(smeltingRecipeBookOpen);
-        writer.writeBoolean(smeltingRecipeBookFilterActive);
-
-        writer.writeVarInt(recipesId.length);
-        for (String string : recipesId) {
-            writer.writeSizedString(string);
-        }
-
-        if (mode == 0) {
-            writer.writeVarInt(initRecipesId.length);
-            for (String string : initRecipesId) {
-                writer.writeSizedString(string);
-            }
-        }
+        this.packetAdapter.getUnlockRecipesPacket().writePacket(writer, this);
     }
 
     @Override

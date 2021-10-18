@@ -2,7 +2,6 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -29,18 +28,7 @@ public class WindowItemsPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeByte(windowId);
-        writer.writeVarInt(stateId);
-
-        if (items == null) {
-            writer.writeVarInt(0);
-        } else {
-            writer.writeVarInt(items.length);
-            for (ItemStack item : items) {
-                writer.writeItemStack(item);
-            }
-        }
-        writer.writeItemStack(carriedItem);
+        this.packetAdapter.getWindowItemsPacket().writePacket(writer, this);
     }
 
     @Override

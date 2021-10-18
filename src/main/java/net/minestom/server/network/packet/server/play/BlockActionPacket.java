@@ -4,7 +4,6 @@ import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -35,10 +34,7 @@ public class BlockActionPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeBlockPosition(blockPosition);
-        writer.writeByte(actionId);
-        writer.writeByte(actionParam);
-        writer.writeVarInt(blockId);
+        this.packetAdapter.getBlockActionPacket().writePacket(writer, this);
     }
 
     @Override

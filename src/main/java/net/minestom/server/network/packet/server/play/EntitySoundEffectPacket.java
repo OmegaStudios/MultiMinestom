@@ -1,9 +1,7 @@
 package net.minestom.server.network.packet.server.play;
 
 import net.kyori.adventure.sound.Sound;
-import net.minestom.server.adventure.AdventurePacketConvertor;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -24,11 +22,7 @@ public class EntitySoundEffectPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(soundId);
-        writer.writeVarInt(AdventurePacketConvertor.getSoundSourceValue(soundSource));
-        writer.writeVarInt(entityId);
-        writer.writeFloat(volume);
-        writer.writeFloat(pitch);
+        this.packetAdapter.getEntitySoundEffectPacket().writePacket(writer, this);
     }
 
     @Override

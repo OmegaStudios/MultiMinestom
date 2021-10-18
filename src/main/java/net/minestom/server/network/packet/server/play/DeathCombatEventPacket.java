@@ -2,7 +2,6 @@ package net.minestom.server.network.packet.server.play;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -32,9 +31,7 @@ public class DeathCombatEventPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(playerId);
-        writer.writeInt(entityId);
-        writer.writeComponent(message);
+        this.packetAdapter.getDeathCombatEventPacket().writePacket(writer, this);
     }
 
     @Override

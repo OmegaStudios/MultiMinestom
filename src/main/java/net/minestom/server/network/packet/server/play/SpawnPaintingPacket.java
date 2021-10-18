@@ -1,12 +1,11 @@
 package net.minestom.server.network.packet.server.play;
 
+import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
-import net.minestom.server.coordinate.Point;
-import net.minestom.server.coordinate.Vec;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -27,11 +26,7 @@ public class SpawnPaintingPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(entityId);
-        writer.writeUuid(entityUuid);
-        writer.writeVarInt(motive);
-        writer.writeBlockPosition(position);
-        writer.writeByte(direction);
+        this.packetAdapter.getSpawnPaintingPacket().writePacket(writer, this);
     }
 
     @Override

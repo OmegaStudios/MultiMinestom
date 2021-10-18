@@ -1,7 +1,6 @@
 package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -20,11 +19,7 @@ public class StopSoundPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeByte(flags);
-        if (flags == 3 || flags == 1)
-            writer.writeVarInt(source);
-        if (flags == 2 || flags == 3)
-            writer.writeSizedString(sound);
+        this.packetAdapter.getStopSoundPacket().writePacket(writer, this);
     }
 
     @Override

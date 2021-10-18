@@ -2,7 +2,6 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -29,13 +28,7 @@ public class SpawnPlayerPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(entityId);
-        writer.writeUuid(playerUuid);
-        writer.writeDouble(position.x());
-        writer.writeDouble(position.y());
-        writer.writeDouble(position.z());
-        writer.writeByte((byte) (position.yaw() * 256f / 360f));
-        writer.writeByte((byte) (position.pitch() * 256f / 360f));
+        this.packetAdapter.getSpawnPlayerPacket().writePacket(writer, this);
     }
 
     @Override

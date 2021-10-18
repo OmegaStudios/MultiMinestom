@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.message.ChatPosition;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -40,9 +39,7 @@ public class ChatMessagePacket implements ComponentHoldingServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeComponent(message);
-        writer.writeByte((byte) position.ordinal());
-        writer.writeUuid(uuid);
+        this.packetAdapter.getChatMessagePacket().writePacket(writer, this);
     }
 
     @Override

@@ -1,11 +1,10 @@
 package net.minestom.server.network.packet.server.play;
 
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
-import net.minestom.server.coordinate.Pos;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -27,21 +26,7 @@ public class SpawnLivingEntityPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(entityId);
-        writer.writeUuid(entityUuid);
-        writer.writeVarInt(entityType);
-
-        writer.writeDouble(position.x());
-        writer.writeDouble(position.y());
-        writer.writeDouble(position.z());
-
-        writer.writeByte((byte) (position.yaw() * 256 / 360));
-        writer.writeByte((byte) (position.pitch() * 256 / 360));
-        writer.writeByte((byte) (headPitch * 256 / 360));
-
-        writer.writeShort(velocityX);
-        writer.writeShort(velocityY);
-        writer.writeShort(velocityZ);
+        this.packetAdapter.getSpawnLivingEntityPacket().writePacket(writer, this);
     }
 
     @Override

@@ -1,11 +1,10 @@
 package net.minestom.server.network.packet.server.play;
 
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
-import net.minestom.server.coordinate.Pos;
 import org.jetbrains.annotations.NotNull;
 
 public class SpawnExperienceOrbPacket implements ServerPacket {
@@ -21,11 +20,7 @@ public class SpawnExperienceOrbPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(entityId);
-        writer.writeDouble(position.x());
-        writer.writeDouble(position.y());
-        writer.writeDouble(position.z());
-        writer.writeShort(expCount);
+        this.packetAdapter.getSpawnExperienceOrbPacket().writePacket(writer, this);
     }
 
     @Override

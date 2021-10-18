@@ -1,7 +1,6 @@
 package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -26,9 +25,7 @@ public class UpdateHealthPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeFloat(health);
-        writer.writeVarInt(food);
-        writer.writeFloat(foodSaturation);
+        this.packetAdapter.getUpdateHealthPacket().writePacket(writer, this);
     }
 
     @Override

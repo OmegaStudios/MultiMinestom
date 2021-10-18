@@ -2,13 +2,11 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
 import net.minestom.server.utils.binary.Readable;
 import net.minestom.server.utils.binary.Writeable;
-import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.NotNull;
 
 public class DeclareRecipesPacket implements ServerPacket {
@@ -21,12 +19,7 @@ public class DeclareRecipesPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        Check.notNull(recipes, "Recipes cannot be null!");
-
-        writer.writeVarInt(recipes.length);
-        for (DeclaredRecipe recipe : recipes) {
-            recipe.write(writer);
-        }
+        this.packetAdapter.getDeclareRecipesPacket().writePacket(writer, this);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -34,14 +33,7 @@ public class InitializeWorldBorderPacket implements ServerPacket {
 
     @Override
     public void write(BinaryWriter writer) {
-        writer.writeDouble(x);
-        writer.writeDouble(z);
-        writer.writeDouble(oldDiameter);
-        writer.writeDouble(newDiameter);
-        writer.writeVarLong(speed);
-        writer.writeVarInt(portalTeleportBoundary);
-        writer.writeVarInt(warningTime);
-        writer.writeVarInt(warningBlocks);
+        this.packetAdapter.getInitializeWorldBorderPacket().writePacket(writer, this);
     }
 
     @Override

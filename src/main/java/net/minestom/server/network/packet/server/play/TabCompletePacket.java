@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.adventure.ComponentHolder;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -30,17 +29,7 @@ public class TabCompletePacket implements ComponentHoldingServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(transactionId);
-        writer.writeVarInt(start);
-        writer.writeVarInt(length);
-
-        writer.writeVarInt(matches.length);
-        for (Match match : matches) {
-            writer.writeSizedString(match.match);
-            writer.writeBoolean(match.hasTooltip);
-            if (match.hasTooltip)
-                writer.writeComponent(match.tooltip);
-        }
+        this.packetAdapter.getTabCompletePacket().writePacket(writer, this);
     }
 
     @Override

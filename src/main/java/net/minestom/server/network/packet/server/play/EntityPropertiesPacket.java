@@ -5,7 +5,6 @@ import net.minestom.server.attribute.AttributeInstance;
 import net.minestom.server.attribute.AttributeModifier;
 import net.minestom.server.attribute.AttributeOperation;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -26,11 +25,7 @@ public class EntityPropertiesPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(entityId);
-        writer.writeVarInt(properties.length);
-        for (Property property : properties) {
-            property.write(writer);
-        }
+        this.packetAdapter.getEntityPropertiesPacket().writePacket(writer, this);
     }
 
     @Override

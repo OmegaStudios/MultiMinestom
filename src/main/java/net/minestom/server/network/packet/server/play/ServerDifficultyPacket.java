@@ -1,7 +1,6 @@
 package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -25,8 +24,7 @@ public class ServerDifficultyPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeByte((byte) difficulty.ordinal());
-        writer.writeBoolean(locked);
+        this.packetAdapter.getServerDifficultyPacket().writePacket(writer, this);
     }
 
     @Override

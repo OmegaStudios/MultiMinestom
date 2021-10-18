@@ -1,7 +1,6 @@
 package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -36,28 +35,7 @@ public class UpdateLightPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(chunkX);
-        writer.writeVarInt(chunkZ);
-
-        writer.writeBoolean(trustEdges);
-
-        writer.writeLongArray(skyLightMask.toLongArray());
-        writer.writeLongArray(blockLightMask.toLongArray());
-
-        writer.writeLongArray(emptySkyLightMask.toLongArray());
-        writer.writeLongArray(emptyBlockLightMask.toLongArray());
-
-        writer.writeVarInt(skyLight.size());
-        for (byte[] bytes : skyLight) {
-            writer.writeVarInt(2048); // Always 2048 length
-            writer.writeBytes(bytes);
-        }
-
-        writer.writeVarInt(blockLight.size());
-        for (byte[] bytes : blockLight) {
-            writer.writeVarInt(2048); // Always 2048 length
-            writer.writeBytes(bytes);
-        }
+        this.packetAdapter.getUpdateLightPacket().writePacket(writer, this);
     }
 
     @Override

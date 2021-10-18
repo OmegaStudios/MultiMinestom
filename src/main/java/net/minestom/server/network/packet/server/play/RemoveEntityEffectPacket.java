@@ -1,7 +1,6 @@
 package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.utils.binary.BinaryReader;
@@ -18,8 +17,7 @@ public class RemoveEntityEffectPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(entityId);
-        writer.writeByte((byte) effect.id());
+        this.packetAdapter.getRemoveEntityEffectPacket().writePacket(writer, this);
     }
 
     @Override

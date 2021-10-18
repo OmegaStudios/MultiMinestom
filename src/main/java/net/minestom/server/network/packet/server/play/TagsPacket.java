@@ -4,12 +4,10 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.gamedata.tags.Tag;
 import net.minestom.server.network.packet.FramedPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.PacketUtils;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -35,21 +33,7 @@ public class TagsPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(tagsMap.size());
-        for (var entry : tagsMap.entrySet()) {
-            final var type = entry.getKey();
-            final var tags = entry.getValue();
-            writer.writeSizedString(type.getIdentifier());
-            writer.writeVarInt(tags.size());
-            for (var tag : tags) {
-                writer.writeSizedString(tag.getName().asString());
-                final var values = tag.getValues();
-                writer.writeVarInt(values.size());
-                for (var name : values) {
-                    writer.writeVarInt(type.getFunction().apply(name.asString()));
-                }
-            }
-        }
+        this.packetAdapter.getTagsPacket().writePacket(writer, this);
     }
 
     @Override

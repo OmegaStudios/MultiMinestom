@@ -5,7 +5,6 @@ import net.minestom.server.adventure.ComponentHolder;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -32,14 +31,7 @@ public class PlayerInfoPacket implements ComponentHoldingServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(action.ordinal());
-        writer.writeVarInt(playerInfos.size());
-
-        for (PlayerInfo playerInfo : this.playerInfos) {
-            if (!playerInfo.getClass().equals(action.getClazz())) continue;
-            writer.writeUuid(playerInfo.uuid);
-            playerInfo.write(writer);
-        }
+        this.packetAdapter.getPlayerInfoPacket().writePacket(writer, this);
     }
 
     @Override

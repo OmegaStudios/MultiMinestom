@@ -2,7 +2,6 @@ package net.minestom.server.network.packet.server.play;
 
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -29,10 +28,7 @@ public class SetSlotPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeByte(windowId);
-        writer.writeVarInt(stateId);
-        writer.writeShort(slot);
-        writer.writeItemStack(itemStack);
+        this.packetAdapter.getSetSlotPacket().writePacket(writer, this);
     }
 
     @Override

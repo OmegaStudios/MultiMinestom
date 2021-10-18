@@ -2,10 +2,8 @@ package net.minestom.server.network.packet.server.play;
 
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
-import net.minestom.server.adventure.AdventurePacketConvertor;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
@@ -33,34 +31,7 @@ public class BossBarPacket implements ComponentHoldingServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeUuid(uuid);
-        writer.writeVarInt(action.ordinal());
-
-        switch (action) {
-            case ADD:
-                writer.writeComponent(title);
-                writer.writeFloat(health);
-                writer.writeVarInt(AdventurePacketConvertor.getBossBarColorValue(color));
-                writer.writeVarInt(AdventurePacketConvertor.getBossBarOverlayValue(overlay));
-                writer.writeByte(flags);
-                break;
-            case REMOVE:
-
-                break;
-            case UPDATE_HEALTH:
-                writer.writeFloat(health);
-                break;
-            case UPDATE_TITLE:
-                writer.writeComponent(title);
-                break;
-            case UPDATE_STYLE:
-                writer.writeVarInt(AdventurePacketConvertor.getBossBarColorValue(color));
-                writer.writeVarInt(AdventurePacketConvertor.getBossBarOverlayValue(overlay));
-                break;
-            case UPDATE_FLAGS:
-                writer.writeByte(flags);
-                break;
-        }
+        this.packetAdapter.getBossBarPacket().writePacket(writer, this);
     }
 
     @Override

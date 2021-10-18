@@ -1,11 +1,10 @@
 package net.minestom.server.network.packet.server.play;
 
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.utils.binary.BinaryReader;
 import net.minestom.server.utils.binary.BinaryWriter;
-import net.minestom.server.coordinate.Pos;
 import org.jetbrains.annotations.NotNull;
 
 public class EntityPositionPacket implements ServerPacket {
@@ -20,11 +19,7 @@ public class EntityPositionPacket implements ServerPacket {
 
     @Override
     public void write(@NotNull BinaryWriter writer) {
-        writer.writeVarInt(entityId);
-        writer.writeShort(deltaX);
-        writer.writeShort(deltaY);
-        writer.writeShort(deltaZ);
-        writer.writeBoolean(onGround);
+        this.packetAdapter.getEntityPositionPacket().writePacket(writer, this);
     }
 
     @Override
