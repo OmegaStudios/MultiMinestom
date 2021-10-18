@@ -4,7 +4,6 @@ import net.minestom.server.network.packet.server.multiversion.v1_17.V1_17PacketA
 import net.minestom.server.network.packet.server.multiversion.v1_8.V1_8PacketAdapter;
 import net.minestom.server.network.player.PlayerSocketConnection;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

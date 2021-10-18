@@ -2,10 +2,23 @@ package net.minestom.server.network.packet.server.multiversion.v1_8;
 
 import net.minestom.server.network.packet.server.multiversion.PacketAdapter;
 import net.minestom.server.network.packet.server.multiversion.VersionedPacket;
+import net.minestom.server.network.packet.server.multiversion.v1_8.impl.*;
 
 public class V1_8PacketAdapter implements PacketAdapter {
-    
-    //TODO add versioned packets here
+
+    private static final V1_8ChatMessagePacket CHAT_MESSAGE_PACKET = new V1_8ChatMessagePacket();
+    private static final V1_8CollectItemPacket COLLECT_ITEM_PACKET = new V1_8CollectItemPacket();
+    private static final V1_8EntityAnimationPacket ENTITY_ANIMATION_PACKET = new V1_8EntityAnimationPacket();
+    private static final V1_8EntityEquipmentPacket ENTITY_EQUIPMENT_PACKET = new V1_8EntityEquipmentPacket();
+    private static final V1_8HeldItemChangePacket HELD_ITEM_CHANGE_PACKET = new V1_8HeldItemChangePacket();
+    private static final V1_8JoinGamePacket JOIN_GAME_PACKET = new V1_8JoinGamePacket();
+    private static final V1_8KeepAlivePacket KEEP_ALIVE_PACKET = new V1_8KeepAlivePacket();
+    private static final V1_8PlayerPositionAndLookPacket PLAYER_POSITION_AND_LOOK_PACKET = new V1_8PlayerPositionAndLookPacket();
+    private static final V1_8RespawnPacket RESPAWN_PACKET = new V1_8RespawnPacket();
+    private static final V1_8SpawnPlayerPacket SPAWN_PLAYER_PACKET = new V1_8SpawnPlayerPacket();
+    private static final V1_8SpawnPositionPacket SPAWN_POSITION_PACKET = new V1_8SpawnPositionPacket();
+    private static final V1_8TimeUpdatePacket TIME_UPDATE_PACKET = new V1_8TimeUpdatePacket();
+    private static final V1_8UpdateHealthPacket UPDATE_HEALTH_PACKET = new V1_8UpdateHealthPacket();
     
     @Override
     public VersionedPacket getAcknowledgePlayerDiggingPacket() {
@@ -64,7 +77,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getChatMessagePacket() {
-        return null;
+        return CHAT_MESSAGE_PACKET;
     }
 
     @Override
@@ -84,7 +97,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getCollectItemPacket() {
-        return null;
+        return COLLECT_ITEM_PACKET;
     }
 
     @Override
@@ -139,7 +152,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getEntityAnimationPacket() {
-        return null;
+        return ENTITY_ANIMATION_PACKET;
     }
 
     @Override
@@ -149,7 +162,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getEntityEquipmentPacket() {
-        return null;
+        return ENTITY_EQUIPMENT_PACKET;
     }
 
     @Override
@@ -214,7 +227,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getHeldItemChangePacket() {
-        return null;
+        return HELD_ITEM_CHANGE_PACKET;
     }
 
     @Override
@@ -224,12 +237,12 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getJoinGamePacket() {
-        return null;
+        return JOIN_GAME_PACKET;
     }
 
     @Override
     public VersionedPacket getKeepAlivePacket() {
-        return null;
+        return KEEP_ALIVE_PACKET;
     }
 
     @Override
@@ -299,7 +312,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getPlayerPositionAndLookPacket() {
-        return null;
+        return PLAYER_POSITION_AND_LOOK_PACKET;
     }
 
     @Override
@@ -319,7 +332,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getRespawnPacket() {
-        return null;
+        return RESPAWN_PACKET;
     }
 
     @Override
@@ -404,12 +417,12 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getSpawnPlayerPacket() {
-        return null;
+        return SPAWN_PLAYER_PACKET;
     }
 
     @Override
     public VersionedPacket getSpawnPositionPacket() {
-        return null;
+        return SPAWN_POSITION_PACKET;
     }
 
     @Override
@@ -439,7 +452,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getTimeUpdatePacket() {
-        return null;
+        return TIME_UPDATE_PACKET;
     }
 
     @Override
@@ -459,7 +472,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getUpdateHealthPacket() {
-        return null;
+        return UPDATE_HEALTH_PACKET;
     }
 
     @Override

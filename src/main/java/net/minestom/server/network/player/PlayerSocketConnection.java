@@ -12,6 +12,7 @@ import net.minestom.server.network.packet.FramedPacket;
 import net.minestom.server.network.packet.server.ComponentHoldingServerPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.login.SetCompressionPacket;
+import net.minestom.server.network.packet.server.play.EntityEquipmentPacket;
 import net.minestom.server.network.socket.Worker;
 import net.minestom.server.utils.PacketUtils;
 import net.minestom.server.utils.Utils;
@@ -216,6 +217,11 @@ public class PlayerSocketConnection extends PlayerConnection {
                     serverPacket = ((ComponentHoldingServerPacket) serverPacket).copyWithOperator(component ->
                             GlobalTranslator.render(component, Objects.requireNonNullElseGet(player.getLocale(), MinestomAdventure::getDefaultLocale)));
                 }
+
+                if(serverPacket instanceof EntityEquipmentPacket) {
+                    ((EntityEquipmentPacket) serverPacket).setSendsTo(this);
+                }
+
                 writePacket(serverPacket);
             } else {
                 // Player is probably not logged yet
