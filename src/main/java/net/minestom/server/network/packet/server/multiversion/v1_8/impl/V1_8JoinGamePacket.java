@@ -13,9 +13,15 @@ public class V1_8JoinGamePacket implements VersionedPacket {
     @Override
     public void writePacket(BinaryWriter writer, ServerPacket packet) {
         JoinGamePacket packet_ = (JoinGamePacket) packet;
+
+
+        byte dimension = (byte) 0; // Overworld
+        if(packet_.dimensionType.isUltrawarm()) dimension = (byte) -1; // If it's ultrawarm, it's -1 (nether)
+        else if(!packet_.dimensionType.isBedSafe()) dimension = (byte) 1; // If it's not ultrawarm, and not bed safe, it's 1 (the end)
+
         writer.writeInt(packet_.entityId); //Entity ID
         writer.writeByte(packet_.gameMode.getId()); //Gamemode (0 = Survival; 1 = Creative; 2 = Advanture; 3 = Spectator)
-        writer.writeByte((byte) 0); //Set dimension to 0 (Overworld) //TODO change for Nether/End later
+        writer.writeByte(dimension); //Set dimension
         writer.writeByte(MinecraftServer.getDifficulty().getId()); //Difficulty
         writer.writeByte(Byte.MAX_VALUE); //Max Players (Used to draw player list)
         writer.writeSizedString(packet_.isFlat ? "flat" : "default"); //World Type
