@@ -4,16 +4,21 @@ import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.multiversion.VersionedPacket;
 import net.minestom.server.network.packet.server.multiversion.v1_8.V1_8ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.play.SpawnEntityPacket;
+import net.minestom.server.network.packet.server.play.SpawnPlayerPacket;
 import net.minestom.server.utils.binary.BinaryWriter;
 
 public class V1_8SpawnEntityPacket implements VersionedPacket {
+
 
     //https://wiki.vg/index.php?title=Protocol&oldid=7368#Spawn_Object
     @Override
     public void writePacket(BinaryWriter writer, ServerPacket packet) {
         SpawnEntityPacket packet_ = (SpawnEntityPacket) packet;
+
+        int translatedEntityID = translateEntityTypeID(packet_.type);
+
         writer.writeVarInt(packet_.entityId); //Entity ID
-        writer.writeByte((byte) translateEntityTypeID(packet_.type)); //Entity object type
+        writer.writeByte((byte) translatedEntityID); //Entity object type
 
         writer.writeInt((int) (packet_.position.x() * 32.0D)); //X; Using fixed-point numbers (double respresented by an integer)
         writer.writeInt((int) (packet_.position.y() * 32.0D)); //Y; https://wiki.vg/Data_types#Fixed-point_numbers
@@ -34,10 +39,12 @@ public class V1_8SpawnEntityPacket implements VersionedPacket {
     public int getId() {
         return V1_8ServerPacketIdentifier.SPAWN_ENTITY;
     }
+    //TODO There are no entity IDs for players, lightning bolts and fishing hooks
 
-    //TODO finish and make sure the IDs are all 100% correct (wiki.vg and burger show different ids for some entities? would trust burger more)
-    //1.8: https://wiki.vg/index.php?title=Entity_metadata&oldid=7415#Mobs
+    //1.8: https://wiki.vg/index.php?title=Entity_metadata&oldid=7415#Mobs <-- unreliable source, shows different IDs
     //1.8: https://pokechu22.github.io/Burger/1.8.html#entities
+    //1.8: https://minecraft.fandom.com/wiki/Java_Edition_data_values/Pre-flattening/Entity_IDs
+    //1.8: https://mcreator.net/wiki/entity-ids
     //1.17: https://wiki.vg/Entity_metadata#Mobs
     //1.17: https://pokechu22.github.io/Burger/1.17.1.html#entities
     //Note: SpawnEntityPacket is not used for living entities
@@ -83,7 +90,7 @@ public class V1_8SpawnEntityPacket implements VersionedPacket {
             case 60: return 9; // Painting
             case 64: return 90; // Pig
             case 65:
-            case 66: return 57; // Piglin, Piglin Brute goes into zombie villager
+            case 66: return 57; // Piglin and Piglin Brute goes into zombie villager
             case 69: return 50; // Primed TNT
             case 71: return 101; // Rabbit
             case 74: return 91; // Sheep
@@ -95,6 +102,22 @@ public class V1_8SpawnEntityPacket implements VersionedPacket {
             case 81: return 13; // Small fireball
             case 82: return 97; // Snowman
             case 83: return 61; // Snowball
+            case 84: return 24; // Spectral Arrow
+            case 85: return 52; // Spider
+            case 86: return 94; // Squid
+            case 89: return 7; //Thrown Egg
+            case 90: return 14; // Thrown Ender Pearl
+            case 91: return 17; // Thrown XP Bottle
+            case 92: return 16; // Thrown Potion
+            case 98: return 120; // Villager
+            case 101: return 66; // Witch
+            case 102: return 64; // Wither
+            case 103: return 5; // Wither Skeleton
+            case 104: return 19; // Wither Skull
+            case 105: return 95; // Wolf
+            case 107: return 54; // Zombie
+            case 109: return 27; // Zombie Villager
+
 
             default: return -1; // 1.17 entity that doesnt exist in 1.8 //TODO unsafe; check what happens if 1.8 client receives type id -1
         }
