@@ -32,6 +32,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
     private static final V1_8SpawnPositionPacket SPAWN_POSITION_PACKET = new V1_8SpawnPositionPacket();
     private static final V1_8TimeUpdatePacket TIME_UPDATE_PACKET = new V1_8TimeUpdatePacket();
     private static final V1_8UpdateHealthPacket UPDATE_HEALTH_PACKET = new V1_8UpdateHealthPacket();
+    private static final V1_8SpawnLivingEntityPacket SPAWN_LIVING_ENTITY_PACKET = new V1_8SpawnLivingEntityPacket();
     
     @Override
     public VersionedPacket getAcknowledgePlayerDiggingPacket() {
@@ -420,7 +421,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getSpawnLivingEntityPacket() {
-        return null;
+        return SPAWN_LIVING_ENTITY_PACKET;
     }
 
     @Override
