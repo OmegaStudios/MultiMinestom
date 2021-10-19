@@ -6,21 +6,32 @@ import net.minestom.server.network.packet.server.multiversion.v1_8.impl.*;
 
 public class V1_8PacketAdapter implements PacketAdapter {
 
+    private static final V1_8AttachEntityPacket ATTACH_ENTITY_PACKET = new V1_8AttachEntityPacket();
     private static final V1_8ChatMessagePacket CHAT_MESSAGE_PACKET = new V1_8ChatMessagePacket();
     private static final V1_8CollectItemPacket COLLECT_ITEM_PACKET = new V1_8CollectItemPacket();
+    private static final V1_8DestroyEntitiesPacket DESTROY_ENTITIES_PACKET = new V1_8DestroyEntitiesPacket();
+    private static final V1_8DisconnectPacket DISCONNECT_PACKET = new V1_8DisconnectPacket();
     private static final V1_8EntityAnimationPacket ENTITY_ANIMATION_PACKET = new V1_8EntityAnimationPacket();
+    private static final V1_8EntityEffectPacket ENTITY_EFFECT_PACKET = new V1_8EntityEffectPacket();
     private static final V1_8EntityEquipmentPacket ENTITY_EQUIPMENT_PACKET = new V1_8EntityEquipmentPacket();
+    private static final V1_8EntityHeadLookPacket ENTITY_HEAD_LOOK_PACKET = new V1_8EntityHeadLookPacket();
+    private static final V1_8EntityPositionAndRotationPacket ENTITY_POSITION_AND_ROTATION_PACKET = new V1_8EntityPositionAndRotationPacket();
+    private static final V1_8EntityPositionPacket ENTITY_POSITION_PACKET = new V1_8EntityPositionPacket();
+    private static final V1_8EntityRotationPacket ENTITY_ROTATION_PACKET = new V1_8EntityRotationPacket();
+    private static final V1_8EntityTeleportPacket ENTITY_TELEPORT_PACKET = new V1_8EntityTeleportPacket();
+    private static final V1_8EntityVelocityPacket ENTITY_VELOCITY_PACKET = new V1_8EntityVelocityPacket();
     private static final V1_8HeldItemChangePacket HELD_ITEM_CHANGE_PACKET = new V1_8HeldItemChangePacket();
     private static final V1_8JoinGamePacket JOIN_GAME_PACKET = new V1_8JoinGamePacket();
     private static final V1_8KeepAlivePacket KEEP_ALIVE_PACKET = new V1_8KeepAlivePacket();
     private static final V1_8PlayerPositionAndLookPacket PLAYER_POSITION_AND_LOOK_PACKET = new V1_8PlayerPositionAndLookPacket();
     private static final V1_8RespawnPacket RESPAWN_PACKET = new V1_8RespawnPacket();
+    private static final V1_8SpawnEntityPacket SPAWN_ENTITY_PACKET = new V1_8SpawnEntityPacket();
+    private static final V1_8SpawnExperienceOrbPacket SPAWN_EXPERIENCE_ORB_PACKET = new V1_8SpawnExperienceOrbPacket();
+    private static final V1_8SpawnPaintingPacket SPAWN_PAINTING_PACKET = new V1_8SpawnPaintingPacket();
     private static final V1_8SpawnPlayerPacket SPAWN_PLAYER_PACKET = new V1_8SpawnPlayerPacket();
     private static final V1_8SpawnPositionPacket SPAWN_POSITION_PACKET = new V1_8SpawnPositionPacket();
     private static final V1_8TimeUpdatePacket TIME_UPDATE_PACKET = new V1_8TimeUpdatePacket();
     private static final V1_8UpdateHealthPacket UPDATE_HEALTH_PACKET = new V1_8UpdateHealthPacket();
-    private static final V1_8DisconnectPacket DISCONNECT_PACKET = new V1_8DisconnectPacket();
-    private static final V1_8SpawnEntityPacket SPAWN_ENTITY_PACKET = new V1_8SpawnEntityPacket();
     
     @Override
     public VersionedPacket getAcknowledgePlayerDiggingPacket() {
@@ -39,7 +50,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getAttachEntityPacket() {
-        return null;
+        return ATTACH_ENTITY_PACKET;
     }
 
     @Override
@@ -124,7 +135,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getDestroyEntitiesPacket() {
-        return null;
+        return DESTROY_ENTITIES_PACKET;
     }
 
     @Override
@@ -159,7 +170,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getEntityEffectPacket() {
-        return null;
+        return ENTITY_EFFECT_PACKET;
     }
 
     @Override
@@ -169,7 +180,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getEntityHeadLookPacket() {
-        return null;
+        return ENTITY_HEAD_LOOK_PACKET;
     }
 
     @Override
@@ -179,12 +190,12 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getEntityPositionAndRotationPacket() {
-        return null;
+        return ENTITY_POSITION_AND_ROTATION_PACKET;
     }
 
     @Override
     public VersionedPacket getEntityPositionPacket() {
-        return null;
+        return ENTITY_POSITION_PACKET;
     }
 
     @Override
@@ -194,7 +205,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getEntityRotationPacket() {
-        return null;
+        return ENTITY_ROTATION_PACKET;
     }
 
     @Override
@@ -209,12 +220,12 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getEntityTeleportPacket() {
-        return null;
+        return ENTITY_TELEPORT_PACKET;
     }
 
     @Override
     public VersionedPacket getEntityVelocityPacket() {
-        return null;
+        return ENTITY_VELOCITY_PACKET;
     }
 
     @Override
@@ -404,7 +415,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getSpawnExperienceOrbPacket() {
-        return null;
+        return SPAWN_EXPERIENCE_ORB_PACKET;
     }
 
     @Override
@@ -414,7 +425,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getSpawnPaintingPacket() {
-        return null;
+        return SPAWN_PAINTING_PACKET;
     }
 
     @Override

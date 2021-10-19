@@ -22,7 +22,7 @@ public class V1_8ServerPacketIdentifier {
     public static final int SPAWN_EXPERIENCE_ORB = 0x11;
     public static final int ENTITY_VELOCITY = 0x12;
     public static final int DESTROY_ENTITIES = 0x13;
-    public static final int ENTITY = 0x14; //tell client that entity did not move. never used?
+    public static final int ENTITY = 0x14; //tell client that entity did not move. never used?; does not exist in 1.17
     public static final int ENTITY_POSITION = 0x15; //Entity Relative Move at wiki.vg
     public static final int ENTITY_ROTATION = 0x16; //Entity Look at wiki.vg
     public static final int ENTITY_POSITION_AND_ROTATION = 0x17; //Entity Look and Relative Move at wiki.vg

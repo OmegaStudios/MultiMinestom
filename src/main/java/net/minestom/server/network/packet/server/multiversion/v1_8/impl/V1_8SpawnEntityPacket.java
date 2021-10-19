@@ -2,35 +2,32 @@ package net.minestom.server.network.packet.server.multiversion.v1_8.impl;
 
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.multiversion.VersionedPacket;
-import net.minestom.server.network.packet.server.multiversion.v1_17.V1_17ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.multiversion.v1_8.V1_8ServerPacketIdentifier;
 import net.minestom.server.network.packet.server.play.SpawnEntityPacket;
 import net.minestom.server.utils.binary.BinaryWriter;
 
 public class V1_8SpawnEntityPacket implements VersionedPacket {
 
-    // https://wiki.vg/index.php?title=Protocol&oldid=7368#Spawn_Object
-    // https://pokechu22.github.io/Burger/1.8.html
-    // https://wiki.vg/Entity_metadata#Mobs
-
+    //https://wiki.vg/index.php?title=Protocol&oldid=7368#Spawn_Object
     @Override
     public void writePacket(BinaryWriter writer, ServerPacket packet) {
         SpawnEntityPacket packet_ = (SpawnEntityPacket) packet;
-        writer.writeVarInt(packet_.entityId);
-        writer.writeByte((byte) translateEntityTypeID(packet_.type));
+        writer.writeVarInt(packet_.entityId); //Entity ID
+        writer.writeByte((byte) translateEntityTypeID(packet_.type)); //Entity object type
 
-        writer.writeDouble((int) (packet_.position.x() * 32.0D)); // Using fixed-point numbers (double respresented by an integer)
-        writer.writeDouble((int) (packet_.position.y() * 32.0D)); // https://wiki.vg/Data_types#Fixed-point_numbers
-        writer.writeDouble((int) (packet_.position.z() * 32.0D));
-        writer.writeByte((byte) (packet_.position.pitch() * 256 / 360));
-        writer.writeByte((byte) (packet_.position.yaw() * 256 / 360));
+        writer.writeInt((int) (packet_.position.x() * 32.0D)); //X; Using fixed-point numbers (double respresented by an integer)
+        writer.writeInt((int) (packet_.position.y() * 32.0D)); //Y; https://wiki.vg/Data_types#Fixed-point_numbers
+        writer.writeInt((int) (packet_.position.z() * 32.0D)); //Z
+        writer.writeByte((byte) (packet_.position.pitch() * 256 / 360)); //Yaw
+        writer.writeByte((byte) (packet_.position.yaw() * 256 / 360)); //Pitch
 
-        //todo use the link below to specify data for minecarts, falling blocks, item frames and so on
-        writer.writeInt(packet_.data); // https://wiki.vg/Object_Data
+        //TODO use the link below to specify data for minecarts, falling blocks, item frames and so on
+        writer.writeInt(0); //Data; Set to 0 for now to ignore velocity shorts; https://wiki.vg/index.php?title=Object_Data&oldid=7248
 
-        writer.writeShort(packet_.velocityX);
-        writer.writeShort(packet_.velocityY);
-        writer.writeShort(packet_.velocityZ);
+        //Not needed for now if data is set to 0
+        //writer.writeShort(packet_.velocityX);
+        //writer.writeShort(packet_.velocityY);
+        //writer.writeShort(packet_.velocityZ);
     }
 
     @Override
@@ -38,11 +35,13 @@ public class V1_8SpawnEntityPacket implements VersionedPacket {
         return V1_8ServerPacketIdentifier.SPAWN_ENTITY;
     }
 
-    /*
-        //todo finish and make sure the IDs are all 100% correct
-     */
+    //TODO finish and make sure the IDs are all 100% correct (wiki.vg and burger show different ids for some entities? would trust burger more)
+    //1.8: https://wiki.vg/index.php?title=Entity_metadata&oldid=7415#Mobs
+    //1.8: https://pokechu22.github.io/Burger/1.8.html#entities
+    //1.17: https://wiki.vg/Entity_metadata#Mobs
+    //1.17: https://pokechu22.github.io/Burger/1.17.1.html#entities
+    //Note: SpawnEntityPacket is not used for living entities
     public int translateEntityTypeID(int modernID){
-
 
         switch (modernID) {
             case 1: return 30; // Armor Stand
@@ -97,7 +96,7 @@ public class V1_8SpawnEntityPacket implements VersionedPacket {
             case 82: return 97; // Snowman
             case 83: return 61; // Snowball
 
-            default: return -1; // 1.17 entity that doesnt exist in 1.8
+            default: return -1; // 1.17 entity that doesnt exist in 1.8 //TODO unsafe; check what happens if 1.8 client receives type id -1
         }
 
     }
