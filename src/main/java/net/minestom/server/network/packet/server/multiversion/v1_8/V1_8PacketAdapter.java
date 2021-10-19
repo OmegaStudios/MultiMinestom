@@ -17,6 +17,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
     private static final V1_8EntityHeadLookPacket ENTITY_HEAD_LOOK_PACKET = new V1_8EntityHeadLookPacket();
     private static final V1_8EntityPositionAndRotationPacket ENTITY_POSITION_AND_ROTATION_PACKET = new V1_8EntityPositionAndRotationPacket();
     private static final V1_8EntityPositionPacket ENTITY_POSITION_PACKET = new V1_8EntityPositionPacket();
+    private static final V1_8EntityPropertiesPacket ENTITY_PROPERTIES_PACKET = new V1_8EntityPropertiesPacket();
     private static final V1_8EntityRotationPacket ENTITY_ROTATION_PACKET = new V1_8EntityRotationPacket();
     private static final V1_8EntityTeleportPacket ENTITY_TELEPORT_PACKET = new V1_8EntityTeleportPacket();
     private static final V1_8EntityVelocityPacket ENTITY_VELOCITY_PACKET = new V1_8EntityVelocityPacket();
@@ -25,6 +26,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
     private static final V1_8KeepAlivePacket KEEP_ALIVE_PACKET = new V1_8KeepAlivePacket();
     private static final V1_8PlayerPositionAndLookPacket PLAYER_POSITION_AND_LOOK_PACKET = new V1_8PlayerPositionAndLookPacket();
     private static final V1_8RespawnPacket RESPAWN_PACKET = new V1_8RespawnPacket();
+    private static final V1_8SetExperiencePacket SET_EXPERIENCE_PACKET = new V1_8SetExperiencePacket();
     private static final V1_8SpawnEntityPacket SPAWN_ENTITY_PACKET = new V1_8SpawnEntityPacket();
     private static final V1_8SpawnExperienceOrbPacket SPAWN_EXPERIENCE_ORB_PACKET = new V1_8SpawnExperienceOrbPacket();
     private static final V1_8SpawnPaintingPacket SPAWN_PAINTING_PACKET = new V1_8SpawnPaintingPacket();
@@ -201,7 +203,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getEntityPropertiesPacket() {
-        return null;
+        return ENTITY_PROPERTIES_PACKET;
     }
 
     @Override
@@ -376,7 +378,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getSetExperiencePacket() {
-        return null;
+        return SET_EXPERIENCE_PACKET;
     }
 
     @Override

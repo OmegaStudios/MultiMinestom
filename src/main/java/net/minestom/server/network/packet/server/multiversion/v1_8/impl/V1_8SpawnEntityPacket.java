@@ -39,16 +39,15 @@ public class V1_8SpawnEntityPacket implements VersionedPacket {
     public int getId() {
         return V1_8ServerPacketIdentifier.SPAWN_ENTITY;
     }
-    //TODO There are no entity IDs for players, lightning bolts and fishing hooks
 
+    //TODO There are no entity IDs for players, lightning bolts and fishing hooks
     //1.8: https://wiki.vg/index.php?title=Entity_metadata&oldid=7415#Mobs <-- unreliable source, shows different IDs
     //1.8: https://pokechu22.github.io/Burger/1.8.html#entities
     //1.8: https://minecraft.fandom.com/wiki/Java_Edition_data_values/Pre-flattening/Entity_IDs
     //1.8: https://mcreator.net/wiki/entity-ids
     //1.17: https://wiki.vg/Entity_metadata#Mobs
     //1.17: https://pokechu22.github.io/Burger/1.17.1.html#entities
-    //Note: SpawnEntityPacket is not used for living entities
-    public int translateEntityTypeID(int modernID){
+    public static int translateEntityTypeID(int modernID){
 
         switch (modernID) {
             case 1: return 30; // Armor Stand
