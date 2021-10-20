@@ -8,6 +8,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     private static final V1_8AttachEntityPacket ATTACH_ENTITY_PACKET = new V1_8AttachEntityPacket();
     private static final V1_8ChatMessagePacket CHAT_MESSAGE_PACKET = new V1_8ChatMessagePacket();
+    private static final V1_8ChunkDataPacket CHUNK_DATA_PACKET = new V1_8ChunkDataPacket();
     private static final V1_8CollectItemPacket COLLECT_ITEM_PACKET = new V1_8CollectItemPacket();
     private static final V1_8DestroyEntitiesPacket DESTROY_ENTITIES_PACKET = new V1_8DestroyEntitiesPacket();
     private static final V1_8DisconnectPacket DISCONNECT_PACKET = new V1_8DisconnectPacket();
@@ -29,12 +30,13 @@ public class V1_8PacketAdapter implements PacketAdapter {
     private static final V1_8SetExperiencePacket SET_EXPERIENCE_PACKET = new V1_8SetExperiencePacket();
     private static final V1_8SpawnEntityPacket SPAWN_ENTITY_PACKET = new V1_8SpawnEntityPacket();
     private static final V1_8SpawnExperienceOrbPacket SPAWN_EXPERIENCE_ORB_PACKET = new V1_8SpawnExperienceOrbPacket();
+    private static final V1_8SpawnLivingEntityPacket SPAWN_LIVING_ENTITY_PACKET = new V1_8SpawnLivingEntityPacket();
     private static final V1_8SpawnPaintingPacket SPAWN_PAINTING_PACKET = new V1_8SpawnPaintingPacket();
     private static final V1_8SpawnPlayerPacket SPAWN_PLAYER_PACKET = new V1_8SpawnPlayerPacket();
     private static final V1_8SpawnPositionPacket SPAWN_POSITION_PACKET = new V1_8SpawnPositionPacket();
     private static final V1_8TimeUpdatePacket TIME_UPDATE_PACKET = new V1_8TimeUpdatePacket();
+    private static final V1_8UnloadChunkPacket UNLOAD_CHUNK_PACKET = new V1_8UnloadChunkPacket();
     private static final V1_8UpdateHealthPacket UPDATE_HEALTH_PACKET = new V1_8UpdateHealthPacket();
-    private static final V1_8SpawnLivingEntityPacket SPAWN_LIVING_ENTITY_PACKET = new V1_8SpawnLivingEntityPacket();
     
     @Override
     public VersionedPacket getAcknowledgePlayerDiggingPacket() {
@@ -98,7 +100,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getChunkDataPacket() {
-        return null;
+        return CHUNK_DATA_PACKET;
     }
 
     @Override
@@ -478,7 +480,7 @@ public class V1_8PacketAdapter implements PacketAdapter {
 
     @Override
     public VersionedPacket getUnloadChunkPacket() {
-        return null;
+        return UNLOAD_CHUNK_PACKET;
     }
 
     @Override

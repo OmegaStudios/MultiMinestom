@@ -3,7 +3,6 @@ package net.minestom.server.network.packet.server.multiversion.v1_8.impl;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.multiversion.VersionedPacket;
 import net.minestom.server.network.packet.server.multiversion.v1_8.V1_8ServerPacketIdentifier;
-import net.minestom.server.network.packet.server.play.SpawnEntityPacket;
 import net.minestom.server.network.packet.server.play.SpawnLivingEntityPacket;
 import net.minestom.server.utils.binary.BinaryWriter;
 
