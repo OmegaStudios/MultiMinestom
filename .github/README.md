@@ -1,3 +1,17 @@
+# Omega's Minestom Fork
+
+## Why did you fork Minestom?
+Minestom is an amazing server software with an amazing API but, there some features that are not in base Minestom that we need or some features we need slightly modified.
+
+This fork is designed only with our current and/or future Minecraft projects in mind for the time being.
+
+## What does this fork add?
+- Compatibilty for Minecraft versions 1.8 onwards. (WORK IN PROGRESS)
+
+## Planned features
+- Support for other proxies like [GoLilyPad](https://github.com/LilyPad/GoLilyPad)
+- Translation layer for Bukkit/Spigot's API
+
 # Minestom
 ![banner](banner.png)
 
@@ -54,7 +68,7 @@ Minestom isn't perfect, our choices make it much better for some cases, worse fo
 
 ## Disadvantages
 * Does not work with Bukkit/Forge/Sponge plugins or mods
-* Does not work with older clients (using a proxy with ViaBackwards is possible)
+* ~~Does not work with older clients (using a proxy with ViaBackwards is possible)~~
 * Bad for those who want a vanilla experience
 * Longer to develop something playable
 * Multi-threaded environments are prone to complications
